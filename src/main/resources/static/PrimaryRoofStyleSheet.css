@@ -3,7 +3,11 @@ body{
     display: inline-grid;
     font-family: Georgia, 'Times New Roman', Times, serif;
     color: black;
+    width: 1300px;
     margin: 150px 200px 100px 200px;
+    border-style: solid ;
+    border-color: saddlebrown;
+    border-width: 10px;
 }
 
 header{

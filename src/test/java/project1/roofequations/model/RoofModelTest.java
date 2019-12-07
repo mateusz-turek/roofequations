@@ -10,7 +10,7 @@ class RoofModelTest {
 
     @Test
     void roofTest() {
-        roofTest.setAngle(30);
+        roofTest.setAngle(30.0);
         roofTest.setWidth(-4.0);
         assertNull(roofTest.getWidth());
         assertEquals(30, roofTest.getAngle());
@@ -27,13 +27,13 @@ class RoofModelTest {
 
     @Test
     void setRoofHeightOther() {
-        roofTest.setRoofHeight(5000.00, 20);
+        roofTest.setRoofHeight(5000.00, 20.0);
         assertNull(roofTest.getRoofHeight());
     }
 
     @Test
     void setRoofHeight30degree() {
-        roofTest.setAngle(30);
+        roofTest.setAngle(30.0);
         roofTest.setWidth(10000.00);
         roofTest.setRoofHeight(roofTest.getWidth(), roofTest.getAngle());
         assertEquals(2886.751345948129, roofTest.getRoofHeight());
@@ -41,7 +41,7 @@ class RoofModelTest {
 
     @Test
     void setRoofHeight45degree() {
-        roofTest.setAngle(45);
+        roofTest.setAngle(45.0);
         roofTest.setWidth(10000.00);
         roofTest.setRoofHeight(roofTest.getWidth(), roofTest.getAngle());
         assertEquals(5000, roofTest.getRoofHeight());
@@ -49,7 +49,7 @@ class RoofModelTest {
 
     @Test
     void setRoofHeight60degree() {
-        roofTest.setAngle(60);
+        roofTest.setAngle(60.0);
         roofTest.setWidth(10000.00);
         roofTest.setRoofHeight(roofTest.getWidth(), roofTest.getAngle());
         assertEquals(8660.254037844386, roofTest.getRoofHeight());
@@ -58,7 +58,7 @@ class RoofModelTest {
     @Test
     void setLengthOfRafterNull() {
         roofTest.setWidth(10000.00);
-        roofTest.setAngle(20);
+        roofTest.setAngle(20.0);
         roofTest.setLengthOfRafter(roofTest.getWidth(), roofTest.getAngle());
         assertNull(roofTest.getLengthOfRafter());
     }
@@ -66,7 +66,7 @@ class RoofModelTest {
     @Test
     void setLengthOfRafter30() {
         roofTest.setWidth(10000.00);
-        roofTest.setAngle(30);
+        roofTest.setAngle(30.0);
         roofTest.setLengthOfRafter(roofTest.getWidth(), roofTest.getAngle());
         assertEquals(5773.502691896258, roofTest.getLengthOfRafter());
     }
@@ -74,7 +74,7 @@ class RoofModelTest {
     @Test
     void setLowerPartOfRafter() {
         roofTest.setWidth(10000.00);
-        roofTest.setAngle(30);
+        roofTest.setAngle(30.0);
         roofTest.setLengthOfRafter(roofTest.getWidth(), roofTest.getAngle());
         roofTest.setProportion();
         roofTest.setLowerPartOfRafter(roofTest.getProportion(), roofTest.getLengthOfRafter());
@@ -85,7 +85,7 @@ class RoofModelTest {
     @Test
     void setUpperPartOfRafter() {
         roofTest.setWidth(10000.00);
-        roofTest.setAngle(30);
+        roofTest.setAngle(30.0);
         roofTest.setLengthOfRafter(roofTest.getWidth(), roofTest.getAngle());
         roofTest.setProportion();
         roofTest.setLowerPartOfRafter(roofTest.getProportion(), roofTest.getLengthOfRafter());
