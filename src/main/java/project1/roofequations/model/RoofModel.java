@@ -1,6 +1,9 @@
 package project1.roofequations.model;
 
-class RoofModel {
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
+public class RoofModel {
     private Double width;
     private int angle;
 
@@ -11,26 +14,26 @@ class RoofModel {
     private Double lowerPartOfRafter;
     private Double upperPartOfRafter;
 
-    RoofModel() {
+    public RoofModel() {
     }
 
-    void setAngle(int angle) {
+    public void setAngle(int angle) {
         if (angle == 30 || angle == 45 || angle == 60) {
             this.angle = angle;
         } else
             System.out.println("apropriate angles: 30, 45, 60");
     }
 
-    void setWidth(Double width) {
+    public void setWidth(Double width) {
         if (width > 0)
             this.width = width;
     }
 
-    void setProportion() {
+    public void setProportion() {
         this.proportion = 0.6;
     }
 
-    void setRoofHeight(Double width, int angle) {
+    public void setRoofHeight(Double width, int angle) {
         if (angle == 30) {
             this.roofHeight = width * 0.5 * (Math.sqrt(3) / 3);
         }
@@ -42,7 +45,7 @@ class RoofModel {
         }
     }
 
-    void setLengthOfRafter(Double width, int angle) {
+    public void setLengthOfRafter(Double width, int angle) {
         if (angle == 30) {
             this.lengthOfRafter = width / (2 * Math.sqrt(3) / 2);
         }
@@ -54,40 +57,59 @@ class RoofModel {
         }
     }
 
-    void setLowerPartOfRafter(double proportion, Double rafterLength) {
+    public void setLowerPartOfRafter(double proportion, Double rafterLength) {
         this.lowerPartOfRafter = proportion * rafterLength;
     }
 
-    void setUpperPartOfRafter(Double rafterLength, Double lowerPartOfRafter) {
+    public void setUpperPartOfRafter(Double rafterLength, Double lowerPartOfRafter) {
         this.upperPartOfRafter = rafterLength - lowerPartOfRafter;
     }
 
-    int getAngle() {
+    public int getAngle() {
         return angle;
     }
 
-    double getProportion() {
+    public double getProportion() {
         return proportion;
     }
 
-    Double getRoofHeight() {
+    public Double getRoofHeight() {
         return roofHeight;
     }
 
-    Double getLengthOfRafter() {
+    public Double getLengthOfRafter() {
         return lengthOfRafter;
     }
 
-    Double getLowerPartOfRafter() {
+    public Double getLowerPartOfRafter() {
         return lowerPartOfRafter;
     }
 
-    Double getUpperPartOfRafter() {
+    public Double getUpperPartOfRafter() {
         return upperPartOfRafter;
     }
 
-    Double getWidth() {
+    public Double getWidth() {
         return width;
+    }
+
+    @Override
+    public String toString() {
+        return "Dimensions: " +
+                "width =" + round(width,2) + " [mm]"+
+                ", angle =" + angle + " [mm]"+
+                ", proportion =" + proportion + " [mm]"+
+                ", roofHeight =" + round(roofHeight,2) + " [mm]"+
+                ", lengthOfRafter =" + round(lengthOfRafter,2) + " [mm]"+
+                ", lowerPartOfRafter =" + round(lowerPartOfRafter,2) + " [mm]"+
+                ", upperPartOfRafter =" + round(upperPartOfRafter,2) + " [mm]"
+               ;
+    }
+    private static double round (double value, int places){
+        if (places < 0) throw new IllegalArgumentException();
+        BigDecimal bd = new BigDecimal(Double.toString(value));
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 }
 
