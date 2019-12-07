@@ -3,22 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet"
+          type="text/css"
+          href="PrimaryRoofStyleSheet.css">
+
 </head>
 <body>
 <header>Primary dimensions of a truss</header>
 <form action="/page1">
-    <label>Type width</label>
-    <input type="text" name="width"><br>
-    <label>Select angle</label><br>
+    <label for="width1">Type width in millimeters</label><br>
+    <input type="text" name="width" id="width1"><br>
 
-    <label>30 degree</label>
-    <input type="radio" name="angle" value=30><br>
-    <label>45 degree</label>
-    <input type="radio" name="angle" value="45"><br>
-    <label>60 degree</label>
-    <input type="radio" name="angle" value="60"><br>
+    <label id="angleLabel" >Select angle:  </label><br>
+    <label for="angle1">30 degree</label>
+    <input type="radio" name="angle" id="angle1" value="30"><br>
+    <label for="angle2">45 degree</label>
+    <input type="radio" name="angle" id="angle2" value="45"><br>
+    <label for="angle3">60 degree</label>
+    <input type="radio" name="angle" id="angle3" value="60"><br>
 
-    <input type="submit" value="results">
+    <input type="submit" value="Show results" id="results"><br>
+    <img src="truss1.bmp" id="truss1">
 
 </form>
 

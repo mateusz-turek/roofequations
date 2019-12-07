@@ -1,0 +1,76 @@
+body{
+    background-color: lawngreen;
+    display: inline-grid;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: black;
+    margin: 150px 200px 100px 200px;
+}
+
+header{
+    text-align-all: center;
+    font-size: 300%;
+    margin: 20px 10px 20px 10px;
+}
+
+label[for="width1"] {
+    margin: 10px 10px 10px 10px;
+    font-size: x-large;
+}
+#width1{
+    margin: 10px 10px 10px 10px;
+}
+label[for="angle1"] {
+    text-align: left;
+    margin: 20px 20px 20px 20px;
+    font-size: x-large;
+    border-left: 5px solid saddlebrown;
+    background-color: sandybrown;
+}
+#angle1{
+    margin: 20px 20px 20px 20px;
+    -ms-transform: scale(2.0);
+    -webkit-transform: scale(2.0);
+    transform: scale(2.0);
+}
+label[for="angle2"] {
+    margin: 20px 20px 20px 20px;
+    font-size: x-large;
+    border-left: 5px solid saddlebrown;
+    background-color: sandybrown;
+}
+#angle2{
+    margin: 20px 20px 20px 20px;
+    -ms-transform: scale(2.0);
+    -webkit-transform: scale(2.0);
+    transform: scale(2.0);
+
+}
+label[for="angle3"] {
+    margin: 20px 20px 20px 20px;
+    font-size: x-large;
+    border-left: 5px solid saddlebrown;
+    background-color: sandybrown;
+}
+#angle3{
+    margin: 20px 20px 20px 20px;
+    -ms-transform: scale(2.0);
+    -webkit-transform: scale(2.0);
+    transform: scale(2.0);
+}
+#angleLabel{
+    margin: 10px 10px 10px 10px;
+    font-size: x-large;
+}
+#results{
+    margin: 10px 10px 10px 10px;
+    font-size: x-large;
+}
+#truss1{
+    margin: 10px 10px 10px 10px;
+    border-style: solid;
+    border-width: 5px;
+    border-color: black;
+    position: relative;
+    left: 500px;
+    top: -300px;
+}
