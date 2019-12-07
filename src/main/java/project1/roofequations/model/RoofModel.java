@@ -1,16 +1,17 @@
 package project1.roofequations.model;
 
- class RoofModel {
+class RoofModel {
     private Double width;
     private int angle;
+
     private double proportion;
 
-    private Double roofHeight ;
+    private Double roofHeight;
     private Double lengthOfRafter;
     private Double lowerPartOfRafter;
     private Double upperPartOfRafter;
 
-     RoofModel() {
+    RoofModel() {
     }
 
     void setAngle(int angle) {
@@ -20,65 +21,73 @@ package project1.roofequations.model;
             System.out.println("apropriate angles: 30, 45, 60");
     }
 
-     void setWidth(Double width) {
+    void setWidth(Double width) {
         if (width > 0)
-        this.width = width;
+            this.width = width;
     }
 
-     void setProportion() {
+    void setProportion() {
         this.proportion = 0.6;
     }
-     void setRoofHeight(Double width, int angle) {
-        if (angle == 30){
+
+    void setRoofHeight(Double width, int angle) {
+        if (angle == 30) {
             this.roofHeight = width * 0.5 * (Math.sqrt(3) / 3);
         }
-        if (angle == 45){
+        if (angle == 45) {
             this.roofHeight = width * 0.5 * 1;
         }
-        if (angle == 60){
+        if (angle == 60) {
             this.roofHeight = width * 0.5 * (Math.sqrt(3));
         }
     }
-     void setLengthOfRafter(Double width, int angle) {
-        if (angle == 30){
+
+    void setLengthOfRafter(Double width, int angle) {
+        if (angle == 30) {
             this.lengthOfRafter = width / (2 * Math.sqrt(3) / 2);
         }
-        if (angle == 45){
+        if (angle == 45) {
             this.lengthOfRafter = width / (2 * Math.sqrt(2) / 2);
         }
-        if (angle == 60){
+        if (angle == 60) {
             this.lengthOfRafter = width / 0.5;
         }
     }
 
-     void setLowerPartOfRafter(double proportion, Double rafterLength) {
+    void setLowerPartOfRafter(double proportion, Double rafterLength) {
         this.lowerPartOfRafter = proportion * rafterLength;
     }
 
-     void setUpperPartOfRafter(Double rafterLength, Double lowerPartOfRafter) {
+    void setUpperPartOfRafter(Double rafterLength, Double lowerPartOfRafter) {
         this.upperPartOfRafter = rafterLength - lowerPartOfRafter;
     }
 
-     int getAngle() {
+    int getAngle() {
         return angle;
     }
 
-     double getProportion() { return proportion;
+    double getProportion() {
+        return proportion;
     }
 
-     Double getRoofHeight() { return roofHeight;
+    Double getRoofHeight() {
+        return roofHeight;
     }
 
-     Double getLengthOfRafter() { return lengthOfRafter;
+    Double getLengthOfRafter() {
+        return lengthOfRafter;
     }
 
-     Double getLowerPartOfRafter() { return lowerPartOfRafter;
+    Double getLowerPartOfRafter() {
+        return lowerPartOfRafter;
     }
 
-     Double getUpperPartOfRafter() { return upperPartOfRafter;
+    Double getUpperPartOfRafter() {
+        return upperPartOfRafter;
     }
 
-     Double getWidth() { return width;
+    Double getWidth() {
+        return width;
     }
 }
 
