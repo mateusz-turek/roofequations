@@ -1,3 +1,6 @@
+html{
+    background-image: url("backgroundImage.jpg");
+}
 body{
     background-color: lawngreen;
     display: inline-grid;
@@ -11,7 +14,7 @@ body{
 }
 header{
     text-align-all: center;
-    font-size: 200%;
+    font-size: 250%;
     margin: 20px 10px 20px 10px;
 }
 #valuestitle{

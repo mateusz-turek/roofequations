@@ -1,13 +1,19 @@
+html{
+    background-image: url("backgroundImage.jpg");
+}
 body{
     background-color: lawngreen;
+    color: black;
     display: inline-grid;
     font-family: Georgia, 'Times New Roman', Times, serif;
-    color: black;
     width: 1300px;
+    height: 500px;
     margin: 150px 200px 100px 200px;
+    margin-outside: saddle black;
     border-style: solid ;
     border-color: saddlebrown;
     border-width: 10px;
+
 }
 
 header{
@@ -36,6 +42,14 @@ label[for="angle1"] {
     -ms-transform: scale(2.0);
     -webkit-transform: scale(2.0);
     transform: scale(2.0);
+    transition: 600ms;
+}
+#angle1:checked{
+    margin: 20px 20px 20px 20px;
+    -ms-transform: scale(2.0);
+    -webkit-transform: scale(2.0);
+    transform: scale(2.7);
+    transition: 600ms;
 }
 label[for="angle2"] {
     margin: 20px 20px 20px 20px;
@@ -49,7 +63,14 @@ label[for="angle2"] {
     -ms-transform: scale(2.0);
     -webkit-transform: scale(2.0);
     transform: scale(2.0);
-
+    transition: 600ms;
+}
+#angle2:checked{
+    margin: 20px 20px 20px 20px;
+    -ms-transform: scale(2.0);
+    -webkit-transform: scale(2.0);
+    transform: scale(2.7);
+    transition: 600ms;
 }
 label[for="angle3"] {
     margin: 20px 20px 20px 20px;
@@ -58,11 +79,21 @@ label[for="angle3"] {
     background-color: sandybrown;
     font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
 }
+
 #angle3{
     margin: 20px 20px 20px 20px;
     -ms-transform: scale(2.0);
     -webkit-transform: scale(2.0);
     transform: scale(2.0);
+    transition: 600ms;
+}
+#angle3:checked{
+    margin: 20px 20px 20px 20px;
+    -ms-transform: scale(2.0);
+    -webkit-transform: scale(2.0);
+    transform: scale(2.7);
+    color: darkgreen;
+    transition: 600ms;
 }
 #angleLabel{
     margin: 10px 10px 10px 10px;

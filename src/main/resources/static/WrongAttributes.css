@@ -1,4 +1,7 @@
-body {
+html{
+    background-image: url("backgroundImage.jpg");
+
+}body {
     background-color: lawngreen;
     display: inline-grid;
     font-family: Georgia, 'Times New Roman', Times, serif;
