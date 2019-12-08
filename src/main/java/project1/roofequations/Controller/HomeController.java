@@ -24,7 +24,11 @@ public class HomeController extends RoofModel {
         StringBuilder widthChanger = new StringBuilder(width);
         if (width.equals("")||
                 width.matches(".*[a-zA-Z]+.*")||
-                width.startsWith(",")||width.endsWith(",")||width.endsWith(".")) {
+                width.startsWith(",")||
+                width.endsWith(",")||
+                width.endsWith(".")||
+                width.matches(".*[!@#$%^&*()/?><|`~:+]+.*")||
+                width.contains("*")) {
             return "WrongAttributes";
         }
 
