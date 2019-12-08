@@ -1,9 +1,20 @@
 package project1.roofequations.model;
 
+import lombok.Data;
+
+
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+
+@Entity
+@Data
+@Table(name = "roof_primary_values_by_user")
 public class RoofModel {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private Double width;
     private Double angle;
 

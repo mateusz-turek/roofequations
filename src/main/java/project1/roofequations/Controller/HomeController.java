@@ -1,14 +1,19 @@
 package project1.roofequations.Controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import project1.roofequations.model.RoofDimensionsMap;
 import project1.roofequations.model.RoofModel;
+import project1.roofequations.repository.RoofRepository;
 
 @Controller
 public class HomeController extends RoofModel {
+
+    @Autowired
+    private RoofRepository roofRepository;
 
     @GetMapping("/")
     public String PrimaryAtributes() {
@@ -60,6 +65,8 @@ public class HomeController extends RoofModel {
         roof.setLengthOfRafter(roof.getWidth(), roof.getAngle());
         roof.setLowerPartOfRafter(roof.getProportion(), roof.getLengthOfRafter());
         roof.setUpperPartOfRafter(roof.getLengthOfRafter(), roof.getLowerPartOfRafter());
+
+        roofRepository.save(roof);
 
         RoofDimensionsMap dimensionsMap = new RoofDimensionsMap();
         dimensionsMap.addRoofDimension("Width", roof.getWidth());
