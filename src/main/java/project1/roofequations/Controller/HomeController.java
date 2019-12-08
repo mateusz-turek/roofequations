@@ -18,6 +18,7 @@ public class HomeController extends RoofModel {
     public String Primary (@RequestParam Double width, @RequestParam Double angle,ModelMap map) {
         RoofModel roof = new RoofModel();
 
+
         roof.setWidth(width);
         roof.setAngle(angle);
         roof.setProportion();
