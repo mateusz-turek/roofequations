@@ -9,16 +9,21 @@ import project1.roofequations.model.RoofModel;
 
 @Controller
 public class HomeController extends RoofModel {
+
     @GetMapping("/")
     public String PrimaryAtributes() {
 
         return "PrimaryRoof";
     }
     @GetMapping("/page1")
-    public String Primary (@RequestParam Double width, @RequestParam Double angle,ModelMap map) {
+    public String Primary (@RequestParam(required = false) Double width,
+                           @RequestParam (required = false) Double angle,
+                           ModelMap map) {
+
+if (width == null || angle== null || width < 0) {
+    return "WrongAttributes";
+}
         RoofModel roof = new RoofModel();
-
-
         roof.setWidth(width);
         roof.setAngle(angle);
         roof.setProportion();

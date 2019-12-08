@@ -1,0 +1,61 @@
+body {
+    background-color: lawngreen;
+    display: inline-grid;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: black;
+    width: 1300px;
+    margin: 150px 200px 100px 200px;
+    border-style: solid;
+    border-color: saddlebrown;
+    border-width: 10px;
+}
+header{
+    text-align-all: center;
+    font-size: 200%;
+    margin: 20px 10px 20px 10px;
+}
+#return{
+    text-align-all: center;
+    font-size: 200%;
+    margin: 20px 10px 20px 10px;
+    position: relative;
+    top: -630px;
+    right: -900px;
+    transition: 500ms;
+    border-style: solid ;
+    border-color: saddlebrown;
+    border-width: 5px;
+    width: 300px;
+    text-align: center;
+    color: blue;
+    background-color: sandybrown;
+
+}
+#return:hover{
+    right: -900px;
+    color: red;
+    margin: 20px 10px 20px 10px;
+    position: relative;
+    top: -630px;
+    transition: 500ms;
+    border-style: solid ;
+    border-color: saddlebrown;
+    border-width: 5px;
+    border-radius: 20px;
+    width: 300px;
+    text-align: center;
+}
+#sad{
+    margin: 10px 10px 10px 10px;
+    border-style: solid;
+    border-width: 5px;
+    border-color: black;
+    position: relative;
+    right: -300px;
+}
+#message{
+    text-align-all: center;
+    font-size: 150%;
+    margin: 20px 10px 20px 10px;
+    font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
+}

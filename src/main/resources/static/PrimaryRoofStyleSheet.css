@@ -29,6 +29,7 @@ label[for="angle1"] {
     font-size: x-large;
     border-left: 5px solid saddlebrown;
     background-color: sandybrown;
+    font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
 }
 #angle1{
     margin: 20px 20px 20px 20px;
@@ -41,6 +42,7 @@ label[for="angle2"] {
     font-size: x-large;
     border-left: 5px solid saddlebrown;
     background-color: sandybrown;
+    font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
 }
 #angle2{
     margin: 20px 20px 20px 20px;
@@ -54,6 +56,7 @@ label[for="angle3"] {
     font-size: x-large;
     border-left: 5px solid saddlebrown;
     background-color: sandybrown;
+    font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
 }
 #angle3{
     margin: 20px 20px 20px 20px;
