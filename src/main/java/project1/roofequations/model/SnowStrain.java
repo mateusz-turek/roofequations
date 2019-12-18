@@ -72,6 +72,46 @@ public class SnowStrain {
                 coefficientOfVariableStrain,2);
     }
 
+    public Double getCoefficientOfRoofShapeOfMajorPour() {
+        return coefficientOfRoofShapeOfMajorPour;
+    }
+
+    public Double getCoefficientOfRoofShapeOfMinorPour() {
+        return coefficientOfRoofShapeOfMinorPour;
+    }
+
+    public Double getCoefficientOfExposure() {
+        return coefficientOfExposure;
+    }
+
+    public Double getThermalCoefficient() {
+        return thermalCoefficient;
+    }
+
+    public Double getCharacteristicStrainOfSnow() {
+        return characteristicStrainOfSnow;
+    }
+
+    public Double getCoefficientOfVariableStrain() {
+        return coefficientOfVariableStrain;
+    }
+
+    public Double getCharacteristicStrainOfMinorPour() {
+        return characteristicStrainOfMinorPour;
+    }
+
+    public Double getCharacteristicStrainOfMajorPour() {
+        return characteristicStrainOfMajorPour;
+    }
+
+    public Double getComputationalStrainOfMinorPour() {
+        return computationalStrainOfMinorPour;
+    }
+
+    public Double getComputationalStrainOfMajorPour() {
+        return computationalStrainOfMajorPour;
+    }
+
     private static double round (double value, int places){
         if (places < 0) throw new IllegalArgumentException();
         BigDecimal bd = new BigDecimal(Double.toString(value));

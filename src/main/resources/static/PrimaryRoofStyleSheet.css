@@ -29,6 +29,14 @@ label[for="width1"] {
 #width1{
     margin: 10px 10px 10px 10px;
 }
+label[for="city"] {
+    margin: 10px 10px 10px 10px;
+    font-size: x-large;
+}
+#city{
+    margin: 10px 10px 10px 10px;
+}
+
 label[for="angle1"] {
     text-align: left;
     margin: 20px 20px 20px 20px;

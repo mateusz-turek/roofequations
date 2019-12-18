@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import project1.roofequations.model.RoofDimensionsMap;
 import project1.roofequations.model.RoofModel;
+import project1.roofequations.model.SnowStrain;
 import project1.roofequations.repository.RoofRepository;
 import project1.roofequations.service.HomeControllerService;
 
@@ -31,6 +32,7 @@ public class HomeController extends HomeControllerService implements RoofReposit
     @GetMapping("/PrimaryAttributes")
     public String Primary(@RequestParam(required = false) String width,
                           @RequestParam(required = false) Double angle,
+                          @RequestParam(required = false) String city,
                           ModelMap map) {
         if (!widthValidator(width) ||
                 !angleValidator(angle) ||
@@ -63,6 +65,46 @@ public class HomeController extends HomeControllerService implements RoofReposit
                     roof.getUpperPartOfRafter());
 
             map.put("values", dimensionsMap.toString());
+
+            SnowStrain snowStrain = new SnowStrain();
+            snowStrain.setCoefficientOfRoofShapeOfMajorPour(angle);
+            snowStrain.setCoefficientOfRoofShapeOfMinorPour(angle);
+            snowStrain.setCoefficientOfVariableStrain();
+            snowStrain.setCoefficientOfExposure(city);
+            snowStrain.setThermalCoefficient(city);
+            snowStrain.setCharacteristicStrainOfSnow();
+            snowStrain.setCharacteristicStrainOfMinorPour(snowStrain.getCoefficientOfRoofShapeOfMinorPour(),
+                    snowStrain.getCoefficientOfExposure(),snowStrain.getThermalCoefficient(),snowStrain.getCharacteristicStrainOfSnow());
+            snowStrain.setCharacteristicStrainOfMajorPour(snowStrain.getCoefficientOfRoofShapeOfMajorPour(),
+                    snowStrain.getCoefficientOfExposure(),snowStrain.getThermalCoefficient(),snowStrain.getCharacteristicStrainOfSnow());
+            snowStrain.setComputationalStrainOfMinorPour(snowStrain.getCharacteristicStrainOfMinorPour(),
+                    snowStrain.getCoefficientOfVariableStrain());
+            snowStrain.setComputationalStrainOfMajorPour(snowStrain.getCharacteristicStrainOfMajorPour(),
+                    snowStrain.getCoefficientOfVariableStrain());
+
+            RoofDimensionsMap snowStrainMap = new RoofDimensionsMap();
+            snowStrainMap.addRoofDimension("CoefficientOfRoofShapeOfMajorPour",
+                    snowStrain.getCoefficientOfRoofShapeOfMajorPour());
+            snowStrainMap.addRoofDimension("CoefficientOfRoofShapeOfMinorPour",
+                    snowStrain.getCoefficientOfRoofShapeOfMinorPour());
+            snowStrainMap.addRoofDimension("CoefficientOfExposure",
+                    snowStrain.getCoefficientOfExposure());
+            snowStrainMap.addRoofDimension("ThermalCoefficient",
+                    snowStrain.getThermalCoefficient());
+            snowStrainMap.addRoofDimension("CharacteristicStrainOfSnow",
+                    snowStrain.getCharacteristicStrainOfSnow());
+            snowStrainMap.addRoofDimension("CoefficientOfVariableStrain",
+                    snowStrain.getCoefficientOfVariableStrain());
+            snowStrainMap.addRoofDimension("CharacteristicStrainOfMinorPour",
+                    snowStrain.getCharacteristicStrainOfMinorPour());
+            snowStrainMap.addRoofDimension("CharacteristicStrainOfMajorPour",
+                    snowStrain.getCharacteristicStrainOfMajorPour());
+            snowStrainMap.addRoofDimension("ComputationalStrainOfMinorPour",
+                    snowStrain.getComputationalStrainOfMinorPour());
+            snowStrainMap.addRoofDimension("ComputationalStrainOfMajorPour",
+                    snowStrain.getComputationalStrainOfMajorPour());
+
+            map.put("values1", snowStrainMap.toString());
 
             return "RoofDimensions";
         }
