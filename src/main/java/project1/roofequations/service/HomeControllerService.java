@@ -50,4 +50,6 @@ public class HomeControllerService {
     protected boolean angleValidator(Double angle) {
         return angle != null;
     }
+
+    protected boolean cityValidator (String city) {return city !=null;}
 }

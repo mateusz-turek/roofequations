@@ -65,6 +65,7 @@ label[for="angle2"] {
     border-left: 5px solid saddlebrown;
     background-color: sandybrown;
     font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
+    display: none;
 }
 #angle2{
     margin: 20px 20px 20px 20px;
@@ -72,6 +73,7 @@ label[for="angle2"] {
     -webkit-transform: scale(2.0);
     transform: scale(2.0);
     transition: 600ms;
+    display: none;
 }
 #angle2:checked{
     margin: 20px 20px 20px 20px;
@@ -86,6 +88,7 @@ label[for="angle3"] {
     border-left: 5px solid saddlebrown;
     background-color: sandybrown;
     font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
+    display: none;
 }
 
 #angle3{
@@ -94,6 +97,7 @@ label[for="angle3"] {
     -webkit-transform: scale(2.0);
     transform: scale(2.0);
     transition: 600ms;
+    display: none;
 }
 #angle3:checked{
     margin: 20px 20px 20px 20px;
@@ -106,6 +110,31 @@ label[for="angle3"] {
 #angleLabel{
     margin: 10px 10px 10px 10px;
     font-size: x-large;
+}
+p1{margin: 10px 10px 10px 10px;
+    font-size: x-large;
+
+}
+label[for="city"]{
+    margin: 20px 20px 20px 20px;
+    font-size: x-large;
+    border-left: 5px solid saddlebrown;
+    background-color: sandybrown;
+    font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
+}
+#city{
+    margin: 20px 20px 20px 20px;
+    -ms-transform: scale(2.0);
+    -webkit-transform: scale(2.0);
+    transform: scale(2.0);
+    transition: 600ms;
+}
+#city:checked{
+    margin: 20px 20px 20px 20px;
+    -ms-transform: scale(2.0);
+    -webkit-transform: scale(2.0);
+    transform: scale(2.7);
+    transition: 600ms;
 }
 #results{
     margin: 10px 10px 10px 10px;

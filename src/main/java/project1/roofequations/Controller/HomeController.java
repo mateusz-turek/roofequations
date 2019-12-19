@@ -36,6 +36,7 @@ public class HomeController extends HomeControllerService implements RoofReposit
                           ModelMap map) {
         if (!widthValidator(width) ||
                 !angleValidator(angle) ||
+                !cityValidator(city)||
                 widthChanger(width) == null||
                 widthChanger(width) <=0)
          {
