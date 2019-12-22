@@ -118,9 +118,21 @@ public class HomeController extends HomeControllerService implements RoofReposit
             windStrain.setBaseValueOfSpeedPressure(windStrain.getAirDensity(),windStrain.getActualBaseSpeedOfWind());
             windStrain.setCoefficientOfExposition(heightOfBuilding);
             windStrain.setTopValueOfSpeedPressure(windStrain.getCoefficientOfExposition()
-                    ,windStrain.getActualBaseSpeedOfWind());
+                    ,windStrain.getBaseValueOfSpeedPressure());
             windStrain.setPressureOfWindwardSide(windStrain.getTopValueOfSpeedPressure());
             windStrain.setPressureOfLeewardSide(windStrain.getTopValueOfSpeedPressure());
+
+            RoofDimensionsMap windStrainMap = new RoofDimensionsMap();
+            windStrainMap.addRoofDimension("Base speed of wind",windStrain.getBaseSpeedOfWind());
+            windStrainMap.addRoofDimension("Actual base speed of wind", windStrain.getActualBaseSpeedOfWind());
+            windStrainMap.addRoofDimension("Base value of speed pressure", windStrain.getBaseValueOfSpeedPressure());
+            windStrainMap.addRoofDimension("Coefficient of exposition",windStrain.getCoefficientOfExposition());
+            windStrainMap.addRoofDimension("Top value of speed pressure", windStrain.getTopValueOfSpeedPressure());
+            windStrainMap.addRoofDimension("Pressure of windward side",windStrain.getPressureOfWindwardSide());
+            windStrainMap.addRoofDimension("Pressure of leeward side",windStrain.getPressureOfLeewardSide());
+
+
+            map.put("values2",windStrainMap.toString());
 
             return "RoofDimensions";
         }

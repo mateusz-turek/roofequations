@@ -43,7 +43,19 @@ public class WindStrain {
     }
 
     public void setBaseValueOfSpeedPressure(Double airDensity, Double actualBaseSpeedOfWind) {
-        this.baseValueOfSpeedPressure = round(0.5*airDensity*actualBaseSpeedOfWind,2);
+        this.baseValueOfSpeedPressure = round(0.5*airDensity*actualBaseSpeedOfWind*actualBaseSpeedOfWind,2);
+    }
+
+    public Double getPressureOfWindwardSide() {
+        return pressureOfWindwardSide;
+    }
+
+    public Double getPressureOfLeewardSide() {
+        return pressureOfLeewardSide;
+    }
+
+    public Double getBaseValueOfSpeedPressure() {
+        return baseValueOfSpeedPressure;
     }
 
     public Double getCoefficientOfExposition() {
