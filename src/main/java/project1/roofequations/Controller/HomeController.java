@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import project1.roofequations.model.RoofDimensionsMap;
 import project1.roofequations.model.RoofModel;
 import project1.roofequations.model.SnowStrain;
+import project1.roofequations.model.WindStrain;
 import project1.roofequations.repository.RoofRepository;
 import project1.roofequations.service.HomeControllerService;
 
@@ -33,6 +34,9 @@ public class HomeController extends HomeControllerService implements RoofReposit
     public String Primary(@RequestParam(required = false) String width,
                           @RequestParam(required = false) Double angle,
                           @RequestParam(required = false) String city,
+                          @RequestParam(required = false) Double zone,
+                          @RequestParam(required = false) Double high,
+                          @RequestParam(required = false) Double heightOfBuilding,
                           ModelMap map) {
         if (!widthValidator(width) ||
                 !angleValidator(angle) ||
@@ -106,6 +110,17 @@ public class HomeController extends HomeControllerService implements RoofReposit
                     snowStrain.getComputationalStrainOfMajorPour());
 
             map.put("values1", snowStrainMap.toString());
+
+            WindStrain windStrain = new WindStrain();
+            windStrain.setBaseSpeedOfWind(high,zone);
+            windStrain.setActualBaseSpeedOfWind(windStrain.getBaseSpeedOfWind(),
+                    windStrain.getCoefficientOfDirection(),windStrain.getCoefficientOfSeason());
+            windStrain.setBaseValueOfSpeedPressure(windStrain.getAirDensity(),windStrain.getActualBaseSpeedOfWind());
+            windStrain.setCoefficientOfExposition(heightOfBuilding);
+            windStrain.setTopValueOfSpeedPressure(windStrain.getCoefficientOfExposition()
+                    ,windStrain.getActualBaseSpeedOfWind());
+            windStrain.setPressureOfWindwardSide(windStrain.getTopValueOfSpeedPressure());
+            windStrain.setPressureOfLeewardSide(windStrain.getTopValueOfSpeedPressure());
 
             return "RoofDimensions";
         }

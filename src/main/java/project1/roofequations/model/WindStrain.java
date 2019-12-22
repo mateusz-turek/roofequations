@@ -37,16 +37,45 @@ public class WindStrain {
         this.coefficientOfExposition = round(2.3*Math.pow((heightOfBuilding/10),0.24),2);
     }
 
-    public void setActualBaseSpeedOfWind(Double baseSpeedOfWind, Double airDensity, Double coefficientOfDirection,
+    public void setActualBaseSpeedOfWind(Double baseSpeedOfWind, Double coefficientOfDirection,
                                          Double coefficientOfSeason) {
-        this.actualBaseSpeedOfWind = round(baseSpeedOfWind*airDensity*coefficientOfDirection*coefficientOfSeason,2);
+        this.actualBaseSpeedOfWind = round(baseSpeedOfWind*coefficientOfDirection*coefficientOfSeason,2);
     }
 
     public void setBaseValueOfSpeedPressure(Double airDensity, Double actualBaseSpeedOfWind) {
         this.baseValueOfSpeedPressure = round(0.5*airDensity*actualBaseSpeedOfWind,2);
     }
 
-    public void setBaseSpeedOfWind(Double high, int zone) {
+    public Double getCoefficientOfExposition() {
+        return coefficientOfExposition;
+    }
+
+    public Double getBaseSpeedOfWind() {
+        return baseSpeedOfWind;
+    }
+
+    public Double getCoefficientOfSeason() {
+        return coefficientOfSeason;
+    }
+
+    public Double getActualBaseSpeedOfWind() {
+        return actualBaseSpeedOfWind;
+    }
+
+    public Double getAirDensity() {
+        return airDensity;
+
+    }
+
+    public Double getCoefficientOfDirection() {
+        return coefficientOfDirection;
+    }
+
+    public Double getTopValueOfSpeedPressure() {
+        return topValueOfSpeedPressure;
+    }
+
+    public void setBaseSpeedOfWind(Double high, Double zone) {
         if (zone == 1 && high<300){
             this.baseSpeedOfWind = 22.0;
         }
