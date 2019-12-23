@@ -7,10 +7,6 @@ public class WindStrainModel {
 
     private Double baseSpeedOfWind;
 
-    private Double airDensity = 1.25;
-    private Double coefficientOfDirection = 1.0;
-    private Double coefficientOfSeason = 1.0;
-
     private Double actualBaseSpeedOfWind;
     private Double baseValueOfSpeedPressure;
     private Double coefficientOfExposition;
@@ -67,7 +63,7 @@ public class WindStrainModel {
     }
 
     public Double getCoefficientOfSeason() {
-        return coefficientOfSeason;
+        return 1.0;
     }
 
     public Double getActualBaseSpeedOfWind() {
@@ -75,12 +71,11 @@ public class WindStrainModel {
     }
 
     public Double getAirDensity() {
-        return airDensity;
-
+        return 1.25;
     }
 
     public Double getCoefficientOfDirection() {
-        return coefficientOfDirection;
+        return 1.0;
     }
 
     public Double getTopValueOfSpeedPressure() {
