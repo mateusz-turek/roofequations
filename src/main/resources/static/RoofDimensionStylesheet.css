@@ -27,6 +27,11 @@ header{
     font-size: 200%;
     margin: 20px 10px 20px 10px;
 }
+#windStrain{
+    text-align-all: center;
+    font-size: 200%;
+    margin: 20px 10px 20px 10px;
+}
 #results2{
     text-align-all: center;
     font-size: 150%;
@@ -34,6 +39,12 @@ header{
     font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
 }
 #results3{
+    text-align-all: center;
+    font-size: 150%;
+    margin: 20px 10px 20px 10px;
+    font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
+}
+#results4{
     text-align-all: center;
     font-size: 150%;
     margin: 20px 10px 20px 10px;

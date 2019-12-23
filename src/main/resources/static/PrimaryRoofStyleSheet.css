@@ -7,7 +7,7 @@ body{
     display: inline-grid;
     font-family: Georgia, 'Times New Roman', Times, serif;
     width: 1300px;
-    height: 500px;
+    height: 800px;
     margin: 150px 200px 100px 200px;
     margin-outside: saddle black;
     border-style: solid ;
@@ -111,11 +111,53 @@ label[for="angle3"] {
     margin: 10px 10px 10px 10px;
     font-size: x-large;
 }
-p1{margin: 10px 10px 10px 10px;
+p1{
+    margin: 10px 10px 10px 10px;
     font-size: x-large;
-
 }
+p2{
+    margin: 10px 10px 10px 10px;
+    font-size: x-large;
+}
+
 label[for="city"]{
+    margin: 20px 20px 20px 20px;
+    font-size: x-large;
+    border-left: 5px solid saddlebrown;
+    background-color: sandybrown;
+    font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
+}
+label[for="heightOfBuilding"]{
+    margin: 10px 10px 10px 10px;
+    font-size: x-large;
+}
+#heightOfBuilding{
+    margin: 10px 10px 10px 10px;
+    font-size: x-large;
+}
+label[for="high"]{
+    margin: 10px 10px 10px 10px;
+    font-size: x-large;
+}
+#high{
+    margin: 10px 10px 10px 10px;
+    font-size: x-large;
+}
+label[for="zone"]{
+    margin: 20px 20px 20px 20px;
+    font-size: x-large;
+    border-left: 5px solid saddlebrown;
+    background-color: sandybrown;
+    font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
+}
+label[for="zone2"]{
+    margin: 20px 20px 20px 20px;
+    font-size: x-large;
+    border-left: 5px solid saddlebrown;
+    background-color: sandybrown;
+    font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
+}
+label[for="zone3"]{
     margin: 20px 20px 20px 20px;
     font-size: x-large;
     border-left: 5px solid saddlebrown;
@@ -136,6 +178,48 @@ label[for="city"]{
     transform: scale(2.7);
     transition: 600ms;
 }
+#zone{
+    margin: 20px 20px 20px 20px;
+    -ms-transform: scale(2.0);
+    -webkit-transform: scale(2.0);
+    transform: scale(2.0);
+    transition: 600ms;
+}
+#zone:checked{
+    margin: 20px 20px 20px 20px;
+    -ms-transform: scale(2.0);
+    -webkit-transform: scale(2.0);
+    transform: scale(2.7);
+    transition: 600ms;
+}
+#zone2{
+    margin: 20px 20px 20px 20px;
+    -ms-transform: scale(2.0);
+    -webkit-transform: scale(2.0);
+    transform: scale(2.0);
+    transition: 600ms;
+}
+#zone2:checked{
+    margin: 20px 20px 20px 20px;
+    -ms-transform: scale(2.0);
+    -webkit-transform: scale(2.0);
+    transform: scale(2.7);
+    transition: 600ms;
+}
+#zone3{
+    margin: 20px 20px 20px 20px;
+    -ms-transform: scale(2.0);
+    -webkit-transform: scale(2.0);
+    transform: scale(2.0);
+    transition: 600ms;
+}
+#zone3:checked{
+    margin: 20px 20px 20px 20px;
+    -ms-transform: scale(2.0);
+    -webkit-transform: scale(2.0);
+    transform: scale(2.7);
+    transition: 600ms;
+}
 #results{
     margin: 10px 10px 10px 10px;
     font-size: x-large;
@@ -147,5 +231,5 @@ label[for="city"]{
     border-color: black;
     position: relative;
     left: 500px;
-    top: -300px;
+    top: -500px;
 }
