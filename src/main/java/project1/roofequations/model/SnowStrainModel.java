@@ -3,7 +3,7 @@ package project1.roofequations.model;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class SnowStrain {
+public class SnowStrainModel {
     private Double coefficientOfRoofShapeOfMajorPour;
     private Double coefficientOfRoofShapeOfMinorPour;
     private Double coefficientOfExposure;

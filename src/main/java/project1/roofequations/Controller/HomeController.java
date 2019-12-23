@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import project1.roofequations.model.RoofDimensionsMap;
 import project1.roofequations.model.RoofModel;
-import project1.roofequations.model.SnowStrain;
-import project1.roofequations.model.WindStrain;
+import project1.roofequations.model.SnowStrainModel;
+import project1.roofequations.model.WindStrainModel;
 import project1.roofequations.repository.RoofRepository;
 import project1.roofequations.service.HomeControllerService;
 
@@ -71,7 +71,7 @@ public class HomeController extends HomeControllerService implements RoofReposit
 
             map.put("values", dimensionsMap.toString());
 
-            SnowStrain snowStrain = new SnowStrain();
+            SnowStrainModel snowStrain = new SnowStrainModel();
             snowStrain.setCoefficientOfRoofShapeOfMajorPour(angle);
             snowStrain.setCoefficientOfRoofShapeOfMinorPour(angle);
             snowStrain.setCoefficientOfVariableStrain();
@@ -111,7 +111,7 @@ public class HomeController extends HomeControllerService implements RoofReposit
 
             map.put("values1", snowStrainMap.toString());
 
-            WindStrain windStrain = new WindStrain();
+            WindStrainModel windStrain = new WindStrainModel();
             windStrain.setBaseSpeedOfWind(high,zone);
             windStrain.setActualBaseSpeedOfWind(windStrain.getBaseSpeedOfWind(),
                     windStrain.getCoefficientOfDirection(),windStrain.getCoefficientOfSeason());

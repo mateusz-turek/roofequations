@@ -3,7 +3,7 @@ package project1.roofequations.model;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class WindStrain {
+public class WindStrainModel {
 
     private Double baseSpeedOfWind;
 
@@ -18,7 +18,7 @@ public class WindStrain {
     private Double pressureOfWindwardSide;
     private Double pressureOfLeewardSide;
 
-    public WindStrain() {
+    public WindStrainModel() {
     }
 
     public void setPressureOfWindwardSide(Double topValueOfSpeedPressure) {
