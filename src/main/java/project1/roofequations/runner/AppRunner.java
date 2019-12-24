@@ -79,4 +79,10 @@ public class AppRunner implements ApplicationRunner, AdminRepository {
     public void deleteAll() {
 
     }
+
+
+    @Override
+    public Optional<AdminModel> findAdminModelByName(String name) {
+        return Optional.empty();
+    }
 }

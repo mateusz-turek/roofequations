@@ -1,6 +1,7 @@
 package project1.roofequations.Controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import project1.roofequations.model.AdminModel;
@@ -22,8 +23,15 @@ public class AdminController implements AdminRepository {
         return "AdminLogin";
     }
     @GetMapping("/panel")
-    public String panel(@RequestParam(required = false) String login,
-                        @RequestParam(required = false) String password){
+    public String panel(@RequestParam(required = false) String adminName,
+                        @RequestParam(required = false) String adminPassword,
+                        ModelMap map){
+
+        map.put("a",adminRepository.findAll().toString());
+        map.put("b",adminRepository.findAdminModelByName(adminName));
+        map.put("c",adminRepository.findAdminModelByName("Admin"));
+
+
         return "Panel";
     }
 
@@ -80,5 +88,11 @@ public class AdminController implements AdminRepository {
     @Override
     public void deleteAll() {
 
+    }
+
+
+    @Override
+    public Optional<AdminModel> findAdminModelByName(String name) {
+        return Optional.empty();
     }
 }
