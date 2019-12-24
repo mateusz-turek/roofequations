@@ -1,10 +1,11 @@
 package project1.roofequations.Controller;
 
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import project1.roofequations.model.HGirderModel;
 import project1.roofequations.repository.HGirderRepository;
 
@@ -18,7 +19,7 @@ public class PanelController implements HGirderRepository {
         this.hGirderRepository = hGirderRepository;
     }
 
-    @GetMapping("/panel/saved")
+    @GetMapping (value = "/panel/saved")
     public String saved(@RequestParam(required = false) Double ownWeight,
                         @RequestParam(required = false) Double momentOfInertia,
                         @RequestParam(required = false) Double modulusOfElasticity,
@@ -39,6 +40,16 @@ public class PanelController implements HGirderRepository {
         map.put("a", hGirderModel);
         return "Saved";
     }
+    @RequestMapping(value = "/panel/{materials}")
+  //  @ResponseBody
+  //  public String method( @PathVariable ("materials") int id ){
+  //      return "Panel";
+  //  }
+    @ResponseBody
+    public ResponseEntity<Object> findAllById(@PathVariable String materials){
+        return new ResponseEntity<>(hGirderRepository.findAll(), HttpStatus.OK);
+    }
+
 
     @Override
     public <S extends HGirderModel> S save(S s) {
