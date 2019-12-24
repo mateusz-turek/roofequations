@@ -14,7 +14,7 @@ public class AdminController implements AdminRepository {
 
     private AdminRepository adminRepository;
 
-    public AdminController(AdminRepository adminRepository) {
+    public AdminController( AdminRepository adminRepository) {
         this.adminRepository = adminRepository;
     }
 

@@ -9,5 +9,26 @@
 <p2 th:text="${a}" id="results2"></p2>
 <p3 th:text="${b}" id="results"></p3>
 <p4 th:text="${c}" id="results1"></p4>
+<form action="/panel/saved">
+    <label>
+        <input type="text" name="ownWeight" placeholder="ownWeight">
+    </label>
+    <label>
+        <input type="text" name="momentOfInertia" placeholder="momentOfInertia">
+    </label>
+    <label>
+        <input type="text" name="modulusOfElasticity" placeholder="modulusOfElasticity">
+    </label>
+    <label>
+        <input type="text" name="momentOfSecondDegreeInertia" placeholder="momentOfSecondDegreeInertia">
+    </label>
+    <label>
+        <input type="text" name="height" placeholder="height">
+    </label>
+    <label>
+        <input type="text" name="width" placeholder="width">
+    </label>
+    <input type="submit" value="add HGirder" id="add"><br>
+</form>
 </body>
 </html>

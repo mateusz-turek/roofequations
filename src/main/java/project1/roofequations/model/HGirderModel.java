@@ -7,6 +7,7 @@ import javax.persistence.*;
 @Entity
 @Data
 @Table(name = "wood_based_material")
+
 public class HGirderModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
