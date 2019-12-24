@@ -19,20 +19,26 @@ public class AdminController implements AdminRepository {
     }
 
     @GetMapping("/admin")
-    public String adminLogin(){
+    public String adminLogin() {
         return "AdminLogin";
     }
+
     @GetMapping("/panel")
     public String panel(@RequestParam(required = false) String adminName,
                         @RequestParam(required = false) String adminPassword,
-                        ModelMap map){
+                        ModelMap map) {
+        if (adminRepository.findAdminModelByName(adminName).isPresent()) {
+            if (adminRepository.findPassByName(adminName).getPassword().equals(adminPassword)) {
 
-        map.put("a",adminRepository.findAll().toString());
-        map.put("b",adminRepository.findAdminModelByName(adminName));
-        map.put("c",adminRepository.findAdminModelByName("Admin"));
+                map.put("a", adminRepository.findAdminModelByName(adminName).isPresent());
+                map.put("b", adminRepository.findAdminModelByName(adminName).get().getName());
+                map.put("c", adminRepository.findAdminModelByName(adminName).get().getPassword());
+                return "Panel";
+            }
+        }
 
 
-        return "Panel";
+        return "WrongAttributes";
     }
 
     @Override
@@ -94,5 +100,15 @@ public class AdminController implements AdminRepository {
     @Override
     public Optional<AdminModel> findAdminModelByName(String name) {
         return Optional.empty();
+    }
+
+    @Override
+    public AdminModel findPasswordByName(Long id) {
+        return null;
+    }
+
+    @Override
+    public AdminModel findPassByName(String name) {
+        return null;
     }
 }

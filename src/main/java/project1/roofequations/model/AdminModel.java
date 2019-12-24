@@ -14,8 +14,9 @@ public class AdminModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @Column
     private String name;
+    @Column
     private String password;
 
     public AdminModel(String name, String password) {

@@ -21,7 +21,7 @@ public class AppRunner implements ApplicationRunner, AdminRepository {
     @Override
     public void run(ApplicationArguments args) {
         if (adminRepository.count()==0){
-            adminRepository.save(new AdminModel("Admin","Admin"));
+            adminRepository.save(new AdminModel("Admin","Admin1"));
         }
     }
 
@@ -84,5 +84,15 @@ public class AppRunner implements ApplicationRunner, AdminRepository {
     @Override
     public Optional<AdminModel> findAdminModelByName(String name) {
         return Optional.empty();
+    }
+
+    @Override
+    public AdminModel findPasswordByName(Long id ) {
+        return null;
+    }
+
+    @Override
+    public AdminModel findPassByName(String name) {
+        return null;
     }
 }
