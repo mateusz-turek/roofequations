@@ -24,22 +24,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Admi
 
     @Bean
     public UserDetailsService userDetailsService(){
+        UserDetails user = User.withDefaultPasswordEncoder()
+                .username("User")
+                .password("User")
+                .roles("USER")
+                .build();
 
             UserDetails admin = User.withDefaultPasswordEncoder() //password should not be strict String
                     .username(adminRepository.findById(1L).get().getName())
                     .password(adminRepository.findById(1L).get().getPassword())
                     .roles("ADMIN")
                     .build();
-            return new InMemoryUserDetailsManager(admin);
+            return new InMemoryUserDetailsManager(user,admin);
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-         .antMatchers("/","/PrimaryAttributes","WrongAttributes")
-                .permitAll()
-                .anyRequest()
+         .antMatchers("/panel")
                 .hasRole("ADMIN")
+                .anyRequest()
+                .hasAnyRole("ADMIN","USER")
                 .and()
                 .formLogin().permitAll()
                 .and()
