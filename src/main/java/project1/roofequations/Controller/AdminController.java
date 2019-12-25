@@ -19,28 +19,29 @@ public class AdminController implements AdminRepository {
         this.adminRepository = adminRepository;
     }
 
-    @GetMapping("/admin")
-    public String adminLogin() {
-        return "AdminLogin";
-    }
+   // @GetMapping("/admin")
+   // public String adminLogin() {
+   //     return "AdminLogin";
+   // }
 
-    @RequestMapping(value = "/panel")
-    public String panel(@RequestParam(required = false) String adminName,
-                        @RequestParam(required = false) String adminPassword,
+    @GetMapping(value = "/panel")
+    public String panel(
+            //@RequestParam(required = false) String adminName,
+              //          @RequestParam(required = false) String adminPassword,
                         ModelMap map) {
-        if (adminRepository.findAdminModelByName(adminName).isPresent()) {
-            if (adminRepository.findPassByName(adminName).getPassword().equals(adminPassword)) {
+       // if (adminRepository.findAdminModelByName(adminName).isPresent()) {
+         //   if (adminRepository.findPassByName(adminName).getPassword().equals(adminPassword)) {
 
-                map.put("a", adminRepository.findAdminModelByName(adminName).isPresent());
-                map.put("b", adminRepository.findAdminModelByName(adminName).get().getName());
-                map.put("c", adminRepository.findAdminModelByName(adminName).get().getPassword());
+                //map.put("a", adminRepository.findAdminModelByName(adminName).isPresent());
+                //map.put("b", adminRepository.findAdminModelByName(adminName).get().getName());
+                //map.put("c", adminRepository.findAdminModelByName(adminName).get().getPassword());
                 return "Panel";
-            }
+          //  }
         }
 
 
-        return "WrongAttributes";
-    }
+       // return "WrongAttributes";
+    //}
 
     @Override
     public <S extends AdminModel> S save(S s) {

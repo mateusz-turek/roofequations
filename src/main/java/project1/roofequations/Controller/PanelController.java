@@ -50,7 +50,6 @@ public class PanelController implements HGirderRepository {
         return new ResponseEntity<>(hGirderRepository.findAll(), HttpStatus.OK);
     }
 
-
     @Override
     public <S extends HGirderModel> S save(S s) {
         return null;
