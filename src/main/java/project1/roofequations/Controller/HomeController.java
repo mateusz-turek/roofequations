@@ -4,10 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import project1.roofequations.model.RoofDimensionsMap;
-import project1.roofequations.model.RoofModel;
-import project1.roofequations.model.SnowStrainModel;
-import project1.roofequations.model.WindStrainModel;
+import project1.roofequations.model.*;
 import project1.roofequations.repository.RoofRepository;
 import project1.roofequations.service.HomeControllerService;
 
@@ -37,6 +34,8 @@ public class HomeController extends HomeControllerService implements RoofReposit
                           @RequestParam(required = false) Double zone,
                           @RequestParam(required = false) Double high,
                           @RequestParam(required = false) Double heightOfBuilding,
+                          @RequestParam(required = false) Double rozstaw,
+                          @RequestParam(required = false) Double userOwnBuildingStrain,
                           ModelMap map) {
         if (!widthValidator(width) ||
                 !angleValidator(angle) ||
@@ -133,6 +132,34 @@ public class HomeController extends HomeControllerService implements RoofReposit
 
 
             map.put("values2",windStrainMap.toString());
+
+            WholeStrainModel wholeStrainModel = new WholeStrainModel();
+            wholeStrainModel.setAngle(angle);
+            wholeStrainModel.setSpacing(rozstaw);
+            wholeStrainModel.setUserOwnBuildingStrain(userOwnBuildingStrain);
+            wholeStrainModel.setComputationalUserOwnBuildingStrain(wholeStrainModel.getUserOwnBuildingStrain());
+
+            wholeStrainModel.setCharacteristicParallelOwnStrain(wholeStrainModel.getUserOwnBuildingStrain()
+                                                                ,wholeStrainModel.getAngle());
+            wholeStrainModel.setComputationalParallelOwnStrain(wholeStrainModel.getCharacteristicParallelOwnStrain());
+            wholeStrainModel.setCharacteristicProstopadłyOwnStrain(wholeStrainModel.getUserOwnBuildingStrain()
+            ,wholeStrainModel.getAngle());
+            wholeStrainModel.setComputationalPerpendicularOwnStrain(wholeStrainModel.getCharacteristicPerpendicularOwnStrain());
+            // TODO: 2019-12-26 computational strain of snow
+            
+            
+            RoofDimensionsMap wholeStrainModelMap = new RoofDimensionsMap();
+            wholeStrainModelMap.addRoofDimension("angle",wholeStrainModel.getAngle());
+            wholeStrainModelMap.addRoofDimension("rozstaw",wholeStrainModel.getSpacing());
+            wholeStrainModelMap.addRoofDimension("userOwnBuildingStrain",wholeStrainModel.getUserOwnBuildingStrain());
+            wholeStrainModelMap.addRoofDimension("coefficientOfConstantStrain",wholeStrainModel.getCoefficientOfConstantStrain());
+            wholeStrainModelMap.addRoofDimension("characteristicParallelOwnStrain",wholeStrainModel.getCharacteristicParallelOwnStrain());
+            wholeStrainModelMap.addRoofDimension("characteristicProstopadłyOwnStrain",wholeStrainModel.getCharacteristicPerpendicularOwnStrain());
+            wholeStrainModelMap.addRoofDimension("computationalParallelOwnStrain",wholeStrainModel.getComputationalParallelOwnStrain());
+            wholeStrainModelMap.addRoofDimension("computationalProstopadłyOwnStrain",wholeStrainModel.getComputationalPerpendicularOwnStrain());
+            wholeStrainModelMap.addRoofDimension("setComputationalUserOwnBuildingStrain",wholeStrainModel.getComputationalUserOwnBuildingStrain());
+
+            map.put("values3",wholeStrainModelMap.toString());
 
             return "RoofDimensions";
         }
