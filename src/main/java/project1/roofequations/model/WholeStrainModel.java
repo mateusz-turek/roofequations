@@ -18,10 +18,64 @@ public class WholeStrainModel {
 
     private Double characteristicParallelSnowStrainOfMajorPour;
     private Double computationalParallelSnowStrainOfMajorPour;
+    private Double characteristicPerpendicularSnowStrainOfMajorPour;
+    private Double computationalPerpendicularSnowStrainOfMajorPour;
+
+    private Double characteristicParallelSnowStrainOfMinorPour;
+    private Double computationalParallelSnowStrainOfMinorPour;
+    private Double characteristicPerpendicularSnowStrainOfMinorPour;
+    private Double computationalPerpendicularSnowStrainOfMinorPour;
 
 
     public WholeStrainModel() {
     }
+
+    public Double getCharacteristicParallelSnowStrainOfMinorPour() {
+        return characteristicParallelSnowStrainOfMinorPour;
+    }
+
+    public Double getComputationalParallelSnowStrainOfMinorPour() {
+        return computationalParallelSnowStrainOfMinorPour;
+    }
+
+    public void setComputationalParallelSnowStrainOfMinorPour(Double computationalSnowStrainOfMinorPour, Double angle) {
+        if (angle == 30.0)
+        this.computationalParallelSnowStrainOfMinorPour = round(computationalSnowStrainOfMinorPour*0.5*1.1,2);
+    }
+
+    public void setCharacteristicParallelSnowStrainOfMinorPour(Double characteristicSnowStrainOfMinorPour, Double angle) {
+        if (angle == 30.0)
+        this.characteristicParallelSnowStrainOfMinorPour = round(characteristicSnowStrainOfMinorPour*0.5*1.1,2);
+    }
+
+    public Double getCharacteristicPerpendicularSnowStrainOfMajorPour() {
+        return characteristicPerpendicularSnowStrainOfMajorPour;
+    }
+
+    public Double getComputationalPerpendicularSnowStrainOfMajorPour() {
+        return computationalPerpendicularSnowStrainOfMajorPour;
+    }
+
+    public void setComputationalPerpendicularSnowStrainOfMajorPour(Double computationalSnowStrainOfMajorPour, Double angle) {
+        if (angle == 30.0)
+        this.computationalPerpendicularSnowStrainOfMajorPour = round(computationalSnowStrainOfMajorPour*0.8660* spacing,2);
+    }
+
+    public void setCharacteristicPerpendicularSnowStrainOfMajorPour(Double characteristicSnowStrainOfMajorPour, Double angle) {
+        if (angle == 30.0)
+        this.characteristicPerpendicularSnowStrainOfMajorPour = round(characteristicSnowStrainOfMajorPour*0.8660* spacing,2);
+    }
+
+
+    public void setComputationalPerpendicularSnowStrainOfMinorPour(Double computationalSnowStrainOfMinorPour, Double angle) {
+        if (angle == 30){
+        this.computationalPerpendicularSnowStrainOfMinorPour = computationalSnowStrainOfMinorPour*spacing*0.8660;
+    }}
+
+    public void setCharacteristicPerpendicularSnowStrainOfMinorPour(Double characteristicSnowStrainOfMinorPour, Double angle) {
+        if (angle == 30.0){
+        this.characteristicPerpendicularSnowStrainOfMinorPour = round(characteristicSnowStrainOfMinorPour*spacing*0.8660,2);
+    }}
 
     public void setCharacteristicParallelSnowStrainOfMajorPour(Double characteristicSnowStrainOfMajorPour, Double angle) {
         if (angle == 30) {
@@ -31,7 +85,7 @@ public class WholeStrainModel {
 
     public void setComputationalParallelSnowStrainOfMajorPour(Double computationalParallelSnowStrainOfMajorPour, Double angle) {
         if (angle == 30) {
-            this.computationalParallelSnowStrainOfMajorPour = computationalParallelSnowStrainOfMajorPour * spacing * 0.5;
+            this.computationalParallelSnowStrainOfMajorPour = round(computationalParallelSnowStrainOfMajorPour * spacing * 0.5,2);
         }
     }
 
@@ -61,14 +115,31 @@ public class WholeStrainModel {
         this.computationalParallelOwnStrain = round(characteristicParallelOwnStrain * coefficientOfConstantStrain, 2);
     }
 
-    public void setCharacteristicProstopadłyOwnStrain(Double userOwnBuildingStrain, Double angle) {
+    public void setCharacteristicPerpendicularOwnStrain(Double userOwnBuildingStrain, Double angle) {
         if (angle == 30.0) {
-            this.characteristicPerpendicularOwnStrain = round(userOwnBuildingStrain * spacing * 0.8660, 2);
+            this.characteristicPerpendicularOwnStrain = round(userOwnBuildingStrain*spacing*0.8660,2);
         }
     }
 
-    public void setComputationalPerpendicularOwnStrain(Double characteristicProstopadłyOwnStrain) {
-        this.computationalPerpendicularOwnStrain = characteristicProstopadłyOwnStrain * coefficientOfConstantStrain;
+    public void setComputationalPerpendicularOwnStrain(Double characteristicPerpendicularOwnStrain) {
+        this.computationalPerpendicularOwnStrain = characteristicPerpendicularOwnStrain * coefficientOfConstantStrain;
+    }
+
+
+    public Double getCharacteristicParallelSnowStrainOfMajorPour() {
+        return characteristicParallelSnowStrainOfMajorPour;
+    }
+
+    public Double getComputationalParallelSnowStrainOfMajorPour() {
+        return computationalParallelSnowStrainOfMajorPour;
+    }
+
+    public Double getCharacteristicPerpendicularSnowStrainOfMinorPour() {
+        return characteristicPerpendicularSnowStrainOfMinorPour;
+    }
+
+    public Double getComputationalPerpendicularSnowStrainOfMinorPour() {
+        return computationalPerpendicularSnowStrainOfMinorPour;
     }
 
     public Double getComputationalPerpendicularOwnStrain() {

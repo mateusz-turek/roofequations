@@ -34,15 +34,14 @@ public class HomeController extends HomeControllerService implements RoofReposit
                           @RequestParam(required = false) Double zone,
                           @RequestParam(required = false) Double high,
                           @RequestParam(required = false) Double heightOfBuilding,
-                          @RequestParam(required = false) Double rozstaw,
+                          @RequestParam(required = false) Double spacing,
                           @RequestParam(required = false) Double userOwnBuildingStrain,
                           ModelMap map) {
         if (!widthValidator(width) ||
                 !angleValidator(angle) ||
-                !cityValidator(city)||
-                widthChanger(width) == null||
-                widthChanger(width) <=0)
-         {
+                !cityValidator(city) ||
+                widthChanger(width) == null ||
+                widthChanger(width) <= 0) {
             return "WrongAttributes";
         } else {
 
@@ -78,9 +77,9 @@ public class HomeController extends HomeControllerService implements RoofReposit
             snowStrain.setThermalCoefficient(city);
             snowStrain.setCharacteristicStrainOfSnow();
             snowStrain.setCharacteristicStrainOfMinorPour(snowStrain.getCoefficientOfRoofShapeOfMinorPour(),
-                    snowStrain.getCoefficientOfExposure(),snowStrain.getThermalCoefficient(),snowStrain.getCharacteristicStrainOfSnow());
+                    snowStrain.getCoefficientOfExposure(), snowStrain.getThermalCoefficient(), snowStrain.getCharacteristicStrainOfSnow());
             snowStrain.setCharacteristicStrainOfMajorPour(snowStrain.getCoefficientOfRoofShapeOfMajorPour(),
-                    snowStrain.getCoefficientOfExposure(),snowStrain.getThermalCoefficient(),snowStrain.getCharacteristicStrainOfSnow());
+                    snowStrain.getCoefficientOfExposure(), snowStrain.getThermalCoefficient(), snowStrain.getCharacteristicStrainOfSnow());
             snowStrain.setComputationalStrainOfMinorPour(snowStrain.getCharacteristicStrainOfMinorPour(),
                     snowStrain.getCoefficientOfVariableStrain());
             snowStrain.setComputationalStrainOfMajorPour(snowStrain.getCharacteristicStrainOfMajorPour(),
@@ -111,55 +110,74 @@ public class HomeController extends HomeControllerService implements RoofReposit
             map.put("values1", snowStrainMap.toString());
 
             WindStrainModel windStrain = new WindStrainModel();
-            windStrain.setBaseSpeedOfWind(high,zone);
+            windStrain.setBaseSpeedOfWind(high, zone);
             windStrain.setActualBaseSpeedOfWind(windStrain.getBaseSpeedOfWind(),
-                    windStrain.getCoefficientOfDirection(),windStrain.getCoefficientOfSeason());
-            windStrain.setBaseValueOfSpeedPressure(windStrain.getAirDensity(),windStrain.getActualBaseSpeedOfWind());
+                    windStrain.getCoefficientOfDirection(), windStrain.getCoefficientOfSeason());
+            windStrain.setBaseValueOfSpeedPressure(windStrain.getAirDensity(), windStrain.getActualBaseSpeedOfWind());
             windStrain.setCoefficientOfExposition(heightOfBuilding);
             windStrain.setTopValueOfSpeedPressure(windStrain.getCoefficientOfExposition()
-                    ,windStrain.getBaseValueOfSpeedPressure());
+                    , windStrain.getBaseValueOfSpeedPressure());
             windStrain.setPressureOfWindwardSide(windStrain.getTopValueOfSpeedPressure());
             windStrain.setPressureOfLeewardSide(windStrain.getTopValueOfSpeedPressure());
 
             RoofDimensionsMap windStrainMap = new RoofDimensionsMap();
-            windStrainMap.addRoofDimension("Base speed of wind",windStrain.getBaseSpeedOfWind());
+            windStrainMap.addRoofDimension("Base speed of wind", windStrain.getBaseSpeedOfWind());
             windStrainMap.addRoofDimension("Actual base speed of wind", windStrain.getActualBaseSpeedOfWind());
             windStrainMap.addRoofDimension("Base value of speed pressure", windStrain.getBaseValueOfSpeedPressure());
-            windStrainMap.addRoofDimension("Coefficient of exposition",windStrain.getCoefficientOfExposition());
+            windStrainMap.addRoofDimension("Coefficient of exposition", windStrain.getCoefficientOfExposition());
             windStrainMap.addRoofDimension("Top value of speed pressure", windStrain.getTopValueOfSpeedPressure());
-            windStrainMap.addRoofDimension("Pressure of windward side",windStrain.getPressureOfWindwardSide());
-            windStrainMap.addRoofDimension("Pressure of leeward side",windStrain.getPressureOfLeewardSide());
+            windStrainMap.addRoofDimension("Pressure of windward side", windStrain.getPressureOfWindwardSide());
+            windStrainMap.addRoofDimension("Pressure of leeward side", windStrain.getPressureOfLeewardSide());
 
 
-            map.put("values2",windStrainMap.toString());
+            map.put("values2", windStrainMap.toString());
 
             WholeStrainModel wholeStrainModel = new WholeStrainModel();
             wholeStrainModel.setAngle(angle);
-            wholeStrainModel.setSpacing(rozstaw);
+            wholeStrainModel.setSpacing(spacing);
             wholeStrainModel.setUserOwnBuildingStrain(userOwnBuildingStrain);
             wholeStrainModel.setComputationalUserOwnBuildingStrain(wholeStrainModel.getUserOwnBuildingStrain());
 
             wholeStrainModel.setCharacteristicParallelOwnStrain(wholeStrainModel.getUserOwnBuildingStrain()
-                                                                ,wholeStrainModel.getAngle());
+                    , wholeStrainModel.getAngle());
             wholeStrainModel.setComputationalParallelOwnStrain(wholeStrainModel.getCharacteristicParallelOwnStrain());
-            wholeStrainModel.setCharacteristicProstopadłyOwnStrain(wholeStrainModel.getUserOwnBuildingStrain()
-            ,wholeStrainModel.getAngle());
+            wholeStrainModel.setCharacteristicPerpendicularOwnStrain(wholeStrainModel.getUserOwnBuildingStrain()
+                    , wholeStrainModel.getAngle());
             wholeStrainModel.setComputationalPerpendicularOwnStrain(wholeStrainModel.getCharacteristicPerpendicularOwnStrain());
-            // TODO: 2019-12-26 computational strain of snow
-            
-            
-            RoofDimensionsMap wholeStrainModelMap = new RoofDimensionsMap();
-            wholeStrainModelMap.addRoofDimension("angle",wholeStrainModel.getAngle());
-            wholeStrainModelMap.addRoofDimension("rozstaw",wholeStrainModel.getSpacing());
-            wholeStrainModelMap.addRoofDimension("userOwnBuildingStrain",wholeStrainModel.getUserOwnBuildingStrain());
-            wholeStrainModelMap.addRoofDimension("coefficientOfConstantStrain",wholeStrainModel.getCoefficientOfConstantStrain());
-            wholeStrainModelMap.addRoofDimension("characteristicParallelOwnStrain",wholeStrainModel.getCharacteristicParallelOwnStrain());
-            wholeStrainModelMap.addRoofDimension("characteristicProstopadłyOwnStrain",wholeStrainModel.getCharacteristicPerpendicularOwnStrain());
-            wholeStrainModelMap.addRoofDimension("computationalParallelOwnStrain",wholeStrainModel.getComputationalParallelOwnStrain());
-            wholeStrainModelMap.addRoofDimension("computationalProstopadłyOwnStrain",wholeStrainModel.getComputationalPerpendicularOwnStrain());
-            wholeStrainModelMap.addRoofDimension("setComputationalUserOwnBuildingStrain",wholeStrainModel.getComputationalUserOwnBuildingStrain());
+            //snow strain
 
-            map.put("values3",wholeStrainModelMap.toString());
+            wholeStrainModel.setCharacteristicParallelSnowStrainOfMajorPour(snowStrain.getCharacteristicStrainOfMajorPour(), wholeStrainModel.getAngle());
+            wholeStrainModel.setComputationalParallelSnowStrainOfMajorPour(snowStrain.getComputationalStrainOfMajorPour(), wholeStrainModel.getAngle());
+            wholeStrainModel.setCharacteristicPerpendicularSnowStrainOfMinorPour(snowStrain.getCharacteristicStrainOfMinorPour(), wholeStrainModel.getAngle());
+            wholeStrainModel.setComputationalPerpendicularSnowStrainOfMinorPour(snowStrain.getComputationalStrainOfMinorPour(), wholeStrainModel.getAngle());
+            wholeStrainModel.setCharacteristicPerpendicularSnowStrainOfMajorPour(snowStrain.getCharacteristicStrainOfMajorPour(), wholeStrainModel.getAngle());
+            wholeStrainModel.setComputationalPerpendicularSnowStrainOfMajorPour(snowStrain.getComputationalStrainOfMajorPour(), wholeStrainModel.getAngle());
+            wholeStrainModel.setCharacteristicParallelSnowStrainOfMinorPour(snowStrain.getCharacteristicStrainOfMinorPour(), wholeStrainModel.getAngle());
+            wholeStrainModel.setComputationalParallelSnowStrainOfMinorPour(snowStrain.getComputationalStrainOfMinorPour(), wholeStrainModel.getAngle());
+
+
+            RoofDimensionsMap wholeStrainModelMap = new RoofDimensionsMap();
+            wholeStrainModelMap.addRoofDimension("angle", wholeStrainModel.getAngle());
+            wholeStrainModelMap.addRoofDimension("spacing", wholeStrainModel.getSpacing());
+            wholeStrainModelMap.addRoofDimension("userOwnBuildingStrain", wholeStrainModel.getUserOwnBuildingStrain());
+            wholeStrainModelMap.addRoofDimension("coefficientOfConstantStrain", wholeStrainModel.getCoefficientOfConstantStrain());
+            wholeStrainModelMap.addRoofDimension("characteristicParallelOwnStrain", wholeStrainModel.getCharacteristicParallelOwnStrain());
+            wholeStrainModelMap.addRoofDimension("characteristicPerpendicularOwnStrain", wholeStrainModel.getCharacteristicPerpendicularOwnStrain());
+            wholeStrainModelMap.addRoofDimension("computationalParallelOwnStrain", wholeStrainModel.getComputationalParallelOwnStrain());
+            wholeStrainModelMap.addRoofDimension("computationalPerpendicularOwnStrain", wholeStrainModel.getComputationalPerpendicularOwnStrain());
+            wholeStrainModelMap.addRoofDimension("setComputationalUserOwnBuildingStrain", wholeStrainModel.getComputationalUserOwnBuildingStrain());
+
+            //Snow Strain
+
+            wholeStrainModelMap.addRoofDimension("CharacteristicParallelSnowStrainOfMajorPour", wholeStrainModel.getCharacteristicParallelSnowStrainOfMajorPour());
+            wholeStrainModelMap.addRoofDimension("ComputationalParallelSnowStrainOfMajorPour", wholeStrainModel.getComputationalParallelSnowStrainOfMajorPour());
+            wholeStrainModelMap.addRoofDimension("CharacteristicPerpendicularSnowStrainOfMinorPour", wholeStrainModel.getCharacteristicPerpendicularSnowStrainOfMinorPour());
+            wholeStrainModelMap.addRoofDimension("ComputationalPerpendicularSnowStrainOfMinorPour", wholeStrainModel.getComputationalPerpendicularSnowStrainOfMinorPour());
+            wholeStrainModelMap.addRoofDimension("CharacteristicPerpendicularSnowStrainOfMajorPour", wholeStrainModel.getCharacteristicPerpendicularSnowStrainOfMajorPour());
+            wholeStrainModelMap.addRoofDimension("ComputationalPerpendicularSnowStrainOfMajorPour", wholeStrainModel.getComputationalPerpendicularSnowStrainOfMajorPour());
+            wholeStrainModelMap.addRoofDimension("CharacteristicParallelSnowStrainOfMinorPour", wholeStrainModel.getCharacteristicParallelSnowStrainOfMinorPour());
+            wholeStrainModelMap.addRoofDimension("ComputationalParallelSnowStrainOfMinorPour", wholeStrainModel.getComputationalParallelSnowStrainOfMinorPour());
+            map.put("values3", wholeStrainModelMap.toString());
 
             return "RoofDimensions";
         }
