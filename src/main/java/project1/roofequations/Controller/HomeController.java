@@ -1,19 +1,29 @@
 package project1.roofequations.Controller;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import project1.roofequations.model.*;
+import project1.roofequations.repository.HGirderRepository;
 import project1.roofequations.service.HomeControllerService;
+
+import java.util.Optional;
 
 
 @Controller
-public class HomeController extends HomeControllerService {
+public class HomeController extends HomeControllerService implements HGirderRepository {
+    private HGirderRepository hGirderRepository;
+
+    public HomeController(@Qualifier("HGirderRepository") HGirderRepository hGirderRepository) {
+        this.hGirderRepository = hGirderRepository;
+    }
 
 
     @GetMapping("/")
-    public String PrimaryAttributes() {
+    public String PrimaryAttributes(ModelMap map) {
+        map.put("H",hGirderRepository.findAll());
 
         return "PrimaryRoof";
     }
@@ -28,7 +38,11 @@ public class HomeController extends HomeControllerService {
                           @RequestParam(required = false) Double heightOfBuilding,
                           @RequestParam(required = false) Double spacing,
                           @RequestParam(required = false) Double userOwnBuildingStrain,
+                       //   @RequestParam(required = false) Object hGirder,
                           ModelMap map) {
+
+
+
         if (!widthValidator(width) ||
                 !angleValidator(angle) ||
                 !cityValidator(city) ||
@@ -120,7 +134,6 @@ public class HomeController extends HomeControllerService {
             windStrainMap.addRoofDimension("Pressure of windward side", windStrain.getPressureOfWindwardSide());
             windStrainMap.addRoofDimension("Pressure of leeward side", windStrain.getPressureOfLeewardSide());
 
-
             map.put("values2", windStrainMap.toString());
 
             WholeStrainModel wholeStrainModel = new WholeStrainModel();
@@ -170,8 +183,63 @@ public class HomeController extends HomeControllerService {
             wholeStrainModelMap.addRoofDimension("ComputationalParallelSnowStrainOfMinorPour", wholeStrainModel.getComputationalParallelSnowStrainOfMinorPour());
             map.put("values3", wholeStrainModelMap.toString());
 
+
             return "RoofDimensions";
         }
     }
 
+    @Override
+    public <S extends HGirderModel> S save(S s) {
+        return null;
+    }
+
+    @Override
+    public <S extends HGirderModel> Iterable<S> saveAll(Iterable<S> iterable) {
+        return null;
+    }
+
+    @Override
+    public Optional<HGirderModel> findById(Long aLong) {
+        return Optional.empty();
+    }
+
+    @Override
+    public boolean existsById(Long aLong) {
+        return false;
+    }
+
+    @Override
+    public Iterable<HGirderModel> findAll() {
+        return null;
+    }
+
+    @Override
+    public Iterable<HGirderModel> findAllById(Iterable<Long> iterable) {
+        return null;
+    }
+
+    @Override
+    public long count() {
+        return 0;
+    }
+
+    @Override
+    public void deleteById(Long aLong) {
+
+    }
+
+    @Override
+    public void delete(HGirderModel hGirderModel) {
+
+    }
+
+    @Override
+    public void deleteAll(Iterable<? extends HGirderModel> iterable) {
+
+    }
+
+    @Override
+    public void deleteAll() {
+
+    }
 }

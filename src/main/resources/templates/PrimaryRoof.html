@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -41,9 +41,13 @@
     <input type="text" name="heightOfBuilding" id="heightOfBuilding"><br>
 
     <label for="spacing">Type the spacing</label><br>
-    <input type="text" name="spacing" id="spacing">
+    <input type="text" name="spacing" id="spacing"><br>
     <label for="userOwnBuildingStrain">Type the userOwnBuildingStrain </label><br>
-    <input type="text" name="userOwnBuildingStrain" id="userOwnBuildingStrain">
+    <input type="text" name="userOwnBuildingStrain" id="userOwnBuildingStrain"><br>
+
+    <label for="hGirder"> IDK </label><br>
+    <input name="hGirder" id="hGirder" th:text="${H}" >
+
 
     <input type="submit" value="Show results" id="results"><br>
     <img src="truss1.bmp" id="truss1" alt="required attributes">
