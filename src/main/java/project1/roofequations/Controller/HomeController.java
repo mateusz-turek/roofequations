@@ -5,21 +5,12 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import project1.roofequations.model.*;
-import project1.roofequations.repository.RoofRepository;
 import project1.roofequations.service.HomeControllerService;
-
-import java.util.Optional;
 
 
 @Controller
-public class HomeController extends HomeControllerService implements RoofRepository {
+public class HomeController extends HomeControllerService {
 
-
-    private RoofRepository roofRepository;
-
-    public HomeController(RoofRepository roofRepository) {
-        this.roofRepository = roofRepository;
-    }
 
     @GetMapping("/")
     public String PrimaryAttributes() {
@@ -55,7 +46,6 @@ public class HomeController extends HomeControllerService implements RoofReposit
             roof.setLowerPartOfRafter(roof.getProportion(), roof.getLengthOfRafter());
             roof.setUpperPartOfRafter(roof.getLengthOfRafter(), roof.getLowerPartOfRafter());
 
-            roofRepository.save(roof);
 
             RoofDimensionsMap dimensionsMap = new RoofDimensionsMap();
             dimensionsMap.addRoofDimension("Width", roof.getWidth());
@@ -184,58 +174,4 @@ public class HomeController extends HomeControllerService implements RoofReposit
         }
     }
 
-    @Override
-    public <S extends RoofModel> S save(S s) {
-        return null;
-    }
-
-    @Override
-    public <S extends RoofModel> Iterable<S> saveAll(Iterable<S> iterable) {
-        return null;
-    }
-
-    @Override
-    public Optional<RoofModel> findById(Long aLong) {
-        return Optional.empty();
-    }
-
-    @Override
-    public boolean existsById(Long aLong) {
-        return false;
-    }
-
-    @Override
-    public Iterable<RoofModel> findAll() {
-        return null;
-    }
-
-    @Override
-    public Iterable<RoofModel> findAllById(Iterable<Long> iterable) {
-        return null;
-    }
-
-    @Override
-    public long count() {
-        return 0;
-    }
-
-    @Override
-    public void deleteById(Long aLong) {
-
-    }
-
-    @Override
-    public void delete(RoofModel roofModel) {
-
-    }
-
-    @Override
-    public void deleteAll(Iterable<? extends RoofModel> iterable) {
-
-    }
-
-    @Override
-    public void deleteAll() {
-
-    }
 }
