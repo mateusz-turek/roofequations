@@ -72,7 +72,7 @@ public class WholeStrainModel {
 
     public void setComputationalPerpendicularSnowStrainOfMinorPour(Double computationalSnowStrainOfMinorPour, Double angle) {
         if (angle == 30){
-        this.computationalPerpendicularSnowStrainOfMinorPour = computationalSnowStrainOfMinorPour*spacing*0.8660;
+        this.computationalPerpendicularSnowStrainOfMinorPour = round(computationalSnowStrainOfMinorPour*spacing*0.8660,2);
     }}
 
     public void setCharacteristicPerpendicularSnowStrainOfMinorPour(Double characteristicSnowStrainOfMinorPour, Double angle) {
