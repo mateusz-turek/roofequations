@@ -31,9 +31,8 @@ public class RoofModel {
 
     public void setAngle(Double angle) {
         if (angle == 30 || angle == 45 || angle == 60) {
-            this.angle = round(angle,0);
-        } else
-            System.out.println("apropriate angles: 30, 45, 60");
+            this.angle = angle;
+        }
     }
 
     public void setWidth(Double width) {
@@ -109,7 +108,7 @@ public class RoofModel {
     public String toString() {
         return "Dimensions: " +
                 "width =" + round(width,2) + " [mm]"+
-                ", angle =" + angle + " [mm]"+
+                ", angle =" + angle + " [degrees]"+
                 ", proportion =" + proportion + " [mm]"+
                 ", roofHeight =" + round(roofHeight,2) + " [mm]"+
                 ", lengthOfRafter =" + round(lengthOfRafter,2) + " [mm]"+
