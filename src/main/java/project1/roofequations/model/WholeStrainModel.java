@@ -10,22 +10,25 @@ public class WholeStrainModel {
     private Double userOwnBuildingStrain;
     private Double coefficientOfConstantStrain = 1.35;
     private Double computationalUserOwnBuildingStrain;
-
+//Own Strain
     private Double characteristicParallelOwnStrain;
     private Double characteristicPerpendicularOwnStrain;
     private Double computationalParallelOwnStrain;
     private Double computationalPerpendicularOwnStrain;
-
+//Snow
     private Double characteristicParallelSnowStrainOfMajorPour;
     private Double computationalParallelSnowStrainOfMajorPour;
     private Double characteristicPerpendicularSnowStrainOfMajorPour;
     private Double computationalPerpendicularSnowStrainOfMajorPour;
-
     private Double characteristicParallelSnowStrainOfMinorPour;
     private Double computationalParallelSnowStrainOfMinorPour;
     private Double characteristicPerpendicularSnowStrainOfMinorPour;
     private Double computationalPerpendicularSnowStrainOfMinorPour;
-
+//Wind
+    private Double characteristicPerpendicularStrainOfWindwardSide;
+    private Double computationalPerpendicularStrainOfWindwardSide;
+    private Double characteristicPerpendicularStrainOfOfLeewardSide;
+    private Double computationalPerpendicularStrainOfLeewardSide;
 
     public WholeStrainModel() {
     }

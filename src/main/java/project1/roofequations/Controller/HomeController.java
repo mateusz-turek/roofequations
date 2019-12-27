@@ -32,6 +32,7 @@ public class HomeController extends HomeControllerService implements RoofReposit
                           @RequestParam(required = false) Double angle,
                           @RequestParam(required = false) String city,
                           @RequestParam(required = false) Double zone,
+                          // TODO: 2019-12-27 change double to string and parse it to double with validation methods
                           @RequestParam(required = false) Double high,
                           @RequestParam(required = false) Double heightOfBuilding,
                           @RequestParam(required = false) Double spacing,
