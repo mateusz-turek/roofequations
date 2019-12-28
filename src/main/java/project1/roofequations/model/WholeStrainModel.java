@@ -9,6 +9,7 @@ public class WholeStrainModel {
     private Double spacing;
     private Double userOwnBuildingStrain;
     private Double coefficientOfConstantStrain = 1.35;
+    private Double coefficientOfVariableStrain = 1.5;
     private Double computationalUserOwnBuildingStrain;
 //Own Strain
     private Double characteristicParallelOwnStrain;
@@ -31,6 +32,24 @@ public class WholeStrainModel {
     private Double computationalPerpendicularStrainOfLeewardSide;
 
     public WholeStrainModel() {
+    }
+
+    public void setCharacteristicPerpendicularStrainOfWindwardSide(Double pressureOfWindwardSide, Double angle) {
+        if(angle == 30){
+        this.characteristicPerpendicularStrainOfWindwardSide = round((pressureOfWindwardSide*0.8660*spacing)/1000,2);
+    }}
+
+    public void setComputationalPerpendicularStrainOfWindwardSide(Double characteristicPerpendicularStrainOfWindwardSide) {
+        this.computationalPerpendicularStrainOfWindwardSide = round(characteristicPerpendicularStrainOfWindwardSide*coefficientOfVariableStrain,2);
+    }
+
+    public void setCharacteristicPerpendicularStrainOfOfLeewardSide(Double pressureOfLeewardSide, Double angle) {
+        if (angle == 30){
+        this.characteristicPerpendicularStrainOfOfLeewardSide = round((pressureOfLeewardSide*0.8660*spacing)/1000,2);
+    }}
+
+    public void setComputationalPerpendicularStrainOfLeewardSide(Double characteristicPerpendicularStrainOfOfLeewardSide) {
+        this.computationalPerpendicularStrainOfLeewardSide = round(characteristicPerpendicularStrainOfOfLeewardSide*coefficientOfVariableStrain,2);
     }
 
     public Double getCharacteristicParallelSnowStrainOfMinorPour() {
@@ -179,6 +198,26 @@ public class WholeStrainModel {
 
     public Double getComputationalUserOwnBuildingStrain() {
         return computationalUserOwnBuildingStrain;
+    }
+
+    public Double getCoefficientOfVariableStrain() {
+        return coefficientOfVariableStrain;
+    }
+
+    public Double getCharacteristicPerpendicularStrainOfWindwardSide() {
+        return characteristicPerpendicularStrainOfWindwardSide;
+    }
+
+    public Double getComputationalPerpendicularStrainOfWindwardSide() {
+        return computationalPerpendicularStrainOfWindwardSide;
+    }
+
+    public Double getCharacteristicPerpendicularStrainOfOfLeewardSide() {
+        return characteristicPerpendicularStrainOfOfLeewardSide;
+    }
+
+    public Double getComputationalPerpendicularStrainOfLeewardSide() {
+        return computationalPerpendicularStrainOfLeewardSide;
     }
 
     private static double round(double value, int places) {

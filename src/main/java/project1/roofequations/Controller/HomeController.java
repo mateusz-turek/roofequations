@@ -23,7 +23,7 @@ public class HomeController extends HomeControllerService implements HGirderRepo
 
     @GetMapping("/")
     public String PrimaryAttributes(ModelMap map) {
-        map.put("H",hGirderRepository.findAll());
+        map.put("H",hGirderRepository.findAll().toString());
 
         return "PrimaryRoof";
     }
@@ -181,8 +181,18 @@ public class HomeController extends HomeControllerService implements HGirderRepo
             wholeStrainModelMap.addRoofDimension("ComputationalPerpendicularSnowStrainOfMajorPour", wholeStrainModel.getComputationalPerpendicularSnowStrainOfMajorPour());
             wholeStrainModelMap.addRoofDimension("CharacteristicParallelSnowStrainOfMinorPour", wholeStrainModel.getCharacteristicParallelSnowStrainOfMinorPour());
             wholeStrainModelMap.addRoofDimension("ComputationalParallelSnowStrainOfMinorPour", wholeStrainModel.getComputationalParallelSnowStrainOfMinorPour());
-            map.put("values3", wholeStrainModelMap.toString());
 
+            //windStrain
+            wholeStrainModel.setCharacteristicPerpendicularStrainOfWindwardSide(windStrain.getPressureOfWindwardSide(),wholeStrainModel.getAngle());
+            wholeStrainModel.setComputationalPerpendicularStrainOfWindwardSide(wholeStrainModel.getCharacteristicPerpendicularStrainOfWindwardSide());
+            wholeStrainModel.setCharacteristicPerpendicularStrainOfOfLeewardSide(windStrain.getPressureOfLeewardSide(),wholeStrainModel.getAngle());
+            wholeStrainModel.setComputationalPerpendicularStrainOfLeewardSide(wholeStrainModel.getCharacteristicPerpendicularStrainOfOfLeewardSide());
+
+            wholeStrainModelMap.addRoofDimension("CharacteristicPerpendicularStrainOfWindwardSide",wholeStrainModel.getCharacteristicPerpendicularStrainOfWindwardSide());
+            wholeStrainModelMap.addRoofDimension("ComputationalPerpendicularStrainOfWindwardSide",wholeStrainModel.getComputationalPerpendicularStrainOfWindwardSide());
+            wholeStrainModelMap.addRoofDimension("CharacteristicPerpendicularStrainOfOfLeewardSide",wholeStrainModel.getCharacteristicPerpendicularStrainOfOfLeewardSide());
+            wholeStrainModelMap.addRoofDimension("ComputationalPerpendicularStrainOfLeewardSide",wholeStrainModel.getComputationalPerpendicularStrainOfLeewardSide());
+            map.put("values3", wholeStrainModelMap.toString());
 
             return "RoofDimensions";
         }
