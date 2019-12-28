@@ -1,10 +1,12 @@
 package project1.roofequations.Controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import project1.roofequations.Interface.StaticEquations;
 import project1.roofequations.model.*;
 import project1.roofequations.repository.HGirderRepository;
 import project1.roofequations.service.HomeControllerService;
@@ -13,11 +15,16 @@ import java.util.Optional;
 
 
 @Controller
-public class HomeController extends HomeControllerService implements HGirderRepository {
+public class HomeController extends HomeControllerService implements HGirderRepository,StaticEquations {
     private HGirderRepository hGirderRepository;
+
+    @Autowired
+    private StaticEquations staticEquations;
+
 
     public HomeController(@Qualifier("HGirderRepository") HGirderRepository hGirderRepository) {
         this.hGirderRepository = hGirderRepository;
+
     }
 
 
@@ -193,6 +200,26 @@ public class HomeController extends HomeControllerService implements HGirderRepo
             wholeStrainModelMap.addRoofDimension("CharacteristicPerpendicularStrainOfOfLeewardSide",wholeStrainModel.getCharacteristicPerpendicularStrainOfOfLeewardSide());
             wholeStrainModelMap.addRoofDimension("ComputationalPerpendicularStrainOfLeewardSide",wholeStrainModel.getComputationalPerpendicularStrainOfLeewardSide());
             map.put("values3", wholeStrainModelMap.toString());
+
+
+            //bending moments in rafters
+            if (roof.getProportion()==0.6)
+                //own Strain
+
+            staticEquations.bendingMomentsInRafterOnMDLinchpin(-0.035,wholeStrainModel
+                    .getComputationalPerpendicularOwnStrain(),roof.getLengthOfRafter());
+                //snow Strain
+            staticEquations.bendingMomentsInRafterOnMDLinchpin(-0.035,wholeStrainModel
+                    .getComputationalPerpendicularSnowStrainOfMajorPour(),roof.getLengthOfRafter());
+                //wind Strain
+            staticEquations.bendingMomentsInRafterOnMDLinchpin(-0.035,wholeStrainModel
+                    .getComputationalPerpendicularStrainOfWindwardSide(),roof.getLengthOfRafter());
+
+           map.put("A",staticEquations.bendingMomentsInRafterOnMDLinchpin(-0.035,wholeStrainModel
+                   .getComputationalPerpendicularOwnStrain(),roof.getLengthOfRafter())+staticEquations.bendingMomentsInRafterOnMDLinchpin(-0.035,wholeStrainModel
+                   .getComputationalPerpendicularSnowStrainOfMajorPour(),roof.getLengthOfRafter())+staticEquations.bendingMomentsInRafterOnMDLinchpin(-0.035,wholeStrainModel
+                   .getComputationalPerpendicularStrainOfWindwardSide(),roof.getLengthOfRafter()));
+
 
             return "RoofDimensions";
         }
