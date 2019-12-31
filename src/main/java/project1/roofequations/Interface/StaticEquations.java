@@ -15,6 +15,9 @@ public interface StaticEquations {
      default Double bendingMomentsInRafterOnMDLinchpin(Double modifierK1,Double PerpendicularOwnStrain,Double lengthOfRafter){
         return round(modifierK1*PerpendicularOwnStrain*lengthOfRafter*lengthOfRafter,2);
      }
+     default Double perpendicularReactionsToRoofPour( Double modifierN,Double perpendicularStrain,Double lengthOfRafter){
+         return round(modifierN*perpendicularStrain*lengthOfRafter,2);
+     }
 
 
      static double round (double value, int places){
