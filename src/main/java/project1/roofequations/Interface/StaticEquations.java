@@ -19,6 +19,18 @@ public interface StaticEquations {
          return round(modifierN*perpendicularStrain*lengthOfRafter,2);
      }
 
+     default Double compressiveStrengthOnDLinchpin(Double C1,Double computationalParallelStrain,Double upperPartOfRafter){
+         return C1-(computationalParallelStrain*upperPartOfRafter);
+     }
+     default Double getC1(Double angle,Double computationalParallelStrain){
+         Double b = Math.toRadians(90-angle*2);
+         Double bSin = Math.sin(b);
+         Double bCos = Math.cos(b);
+         return (1+bSin)/bCos*computationalParallelStrain;
+     }
+     default Double strengthInADSpan(Double computationalParallelStrain,Double lowerPartOfRafter){
+         return 0.5*computationalParallelStrain*lowerPartOfRafter;
+     }
 
      static double round (double value, int places){
         if (places < 0) throw new IllegalArgumentException();
