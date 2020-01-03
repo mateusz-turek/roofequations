@@ -15,10 +15,14 @@ import java.util.Optional;
 public class PanelController implements HGirderRepository {
     private HGirderRepository hGirderRepository;
 
-    public PanelController(@Qualifier("HGirderRepository") HGirderRepository hGirderRepository) {
+    public PanelController(@Qualifier("HGirder") HGirderRepository hGirderRepository) {
         this.hGirderRepository = hGirderRepository;
     }
 
+    @GetMapping(value = "/panel")
+    public String panel() {
+        return "Panel";
+    }
     @GetMapping (value = "/panel/saved")
     public String saved(@RequestParam(required = false) Double ownWeight,
                         @RequestParam(required = false) Double momentOfInertia,

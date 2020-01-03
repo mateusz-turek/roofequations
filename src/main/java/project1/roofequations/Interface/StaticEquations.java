@@ -1,15 +1,10 @@
 package project1.roofequations.Interface;
-
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+
 @Service
-@Component
 public interface StaticEquations {
 
      default Double bendingMomentsInRafterOnMDLinchpin(Double modifierK1,Double PerpendicularOwnStrain,Double lengthOfRafter){
@@ -20,17 +15,24 @@ public interface StaticEquations {
      }
 
      default Double compressiveStrengthOnDLinchpin(Double C1,Double computationalParallelStrain,Double upperPartOfRafter){
-         return C1-(computationalParallelStrain*upperPartOfRafter);
+         return round(C1-(computationalParallelStrain*upperPartOfRafter),2);
      }
      default Double getC1(Double angle,Double computationalParallelStrain){
-         Double b = Math.toRadians(90-angle*2);
-         Double bSin = Math.sin(b);
+         double b = Math.toRadians(90-(angle*2));
+         double bSin = Math.sin(b);
          Double bCos = Math.cos(b);
-         return (1+bSin)/bCos*computationalParallelStrain;
+         return round((1+bSin)/(bCos*computationalParallelStrain),2);
      }
      default Double strengthInADSpan(Double computationalParallelStrain,Double lowerPartOfRafter){
-         return 0.5*computationalParallelStrain*lowerPartOfRafter;
+         return round(0.5*computationalParallelStrain*lowerPartOfRafter,2);
      }
+     default Double distanceFromLinchpinToPlaceOfMaximumMomentumOfMad(Double Ra, Double computationalPerpendicularStrain){
+         return round(Ra/computationalPerpendicularStrain,2);
+     }
+     default Double valueOfNad(Double Rha,Double computationalParallelStrain,Double distanceFromLinchpinToPlaceOfMaximumMomentumOfMad){
+         return round(Rha-(computationalParallelStrain*distanceFromLinchpinToPlaceOfMaximumMomentumOfMad),2);
+     }
+
 
      static double round (double value, int places){
         if (places < 0) throw new IllegalArgumentException();

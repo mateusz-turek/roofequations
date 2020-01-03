@@ -53,21 +53,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Admi
     }
 
     @Override
-    public Optional<AdminModel> findAdminModelByName(String name) {
-        return Optional.empty();
-    }
-
-    @Override
-    public AdminModel findPasswordByName(Long id) {
-        return null;
-    }
-
-    @Override
-    public AdminModel findPassByName(String name) {
-        return null;
-    }
-
-    @Override
     public <S extends AdminModel> S save(S s) {
         return null;
     }

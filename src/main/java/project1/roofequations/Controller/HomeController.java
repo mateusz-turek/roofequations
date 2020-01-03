@@ -22,7 +22,7 @@ public class HomeController extends HomeControllerService implements HGirderRepo
     private StaticEquations staticEquations;
 
 
-    public HomeController(@Qualifier("HGirderRepository") HGirderRepository hGirderRepository) {
+    public HomeController(@Qualifier("HGirder") HGirderRepository hGirderRepository) {
         this.hGirderRepository = hGirderRepository;
 
     }
@@ -251,6 +251,24 @@ public class HomeController extends HomeControllerService implements HGirderRepo
                     .getComputationalPerpendicularSnowStrainOfMajorPour(), roof.getLengthOfRafter()) + staticEquations.perpendicularReactionsToRoofPour(0.6457, wholeStrainModel
                     .getComputationalPerpendicularStrainOfWindwardSide(), roof.getLengthOfRafter()));
 
+            //  staticEquations.getC1(wholeStrainModel.getAngle(),wholeStrainModel.getComputationalParallelOwnStrain()+wholeStrainModel.getComputationalParallelSnowStrainOfMajorPour());
+            map.put("G", staticEquations.compressiveStrengthOnDLinchpin(staticEquations.getC1(wholeStrainModel.getAngle(), wholeStrainModel.getComputationalParallelOwnStrain() + wholeStrainModel.getComputationalParallelSnowStrainOfMajorPour())
+                    , wholeStrainModel.getComputationalParallelOwnStrain() + wholeStrainModel.getComputationalParallelSnowStrainOfMajorPour(), roof.getUpperPartOfRafter()));
+
+            map.put("H", staticEquations.strengthInADSpan(wholeStrainModel.getComputationalParallelOwnStrain() + wholeStrainModel.getComputationalParallelSnowStrainOfMajorPour(),
+                    roof.getLowerPartOfRafter()));
+
+           map.put("I", staticEquations.distanceFromLinchpinToPlaceOfMaximumMomentumOfMad(staticEquations.perpendicularReactionsToRoofPour(0.2413, wholeStrainModel
+                    .getComputationalPerpendicularOwnStrain(), roof.getLengthOfRafter()) + staticEquations.perpendicularReactionsToRoofPour(0.2413, wholeStrainModel
+                    .getComputationalPerpendicularSnowStrainOfMajorPour(), roof.getLengthOfRafter()) + staticEquations.perpendicularReactionsToRoofPour(0.2413, wholeStrainModel
+                    .getComputationalPerpendicularStrainOfWindwardSide(), roof.getLengthOfRafter()),wholeStrainModel.getComputationalPerpendicularOwnStrain()+ wholeStrainModel.getComputationalPerpendicularSnowStrainOfMajorPour()));
+
+            map.put("J",staticEquations.valueOfNad(staticEquations.strengthInADSpan(wholeStrainModel.getComputationalParallelOwnStrain() + wholeStrainModel.getComputationalParallelSnowStrainOfMajorPour(),
+                    roof.getLowerPartOfRafter()),wholeStrainModel.getComputationalParallelOwnStrain()+wholeStrainModel.getComputationalParallelSnowStrainOfMajorPour()
+                    ,staticEquations.distanceFromLinchpinToPlaceOfMaximumMomentumOfMad(staticEquations.perpendicularReactionsToRoofPour(0.2413, wholeStrainModel
+                            .getComputationalPerpendicularOwnStrain(), roof.getLengthOfRafter()) + staticEquations.perpendicularReactionsToRoofPour(0.2413, wholeStrainModel
+                            .getComputationalPerpendicularSnowStrainOfMajorPour(), roof.getLengthOfRafter()) + staticEquations.perpendicularReactionsToRoofPour(0.2413, wholeStrainModel
+                            .getComputationalPerpendicularStrainOfWindwardSide(), roof.getLengthOfRafter()),wholeStrainModel.getComputationalPerpendicularOwnStrain()+ wholeStrainModel.getComputationalParallelSnowStrainOfMajorPour())));
 
             return "RoofDimensions";
         }
