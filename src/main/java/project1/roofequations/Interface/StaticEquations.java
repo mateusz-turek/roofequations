@@ -44,6 +44,12 @@ public interface StaticEquations {
      default Double relativeSlenderness( Double defaultSlim, Double fck,Double modulusOfElasticity){
          return round((defaultSlim/Math.PI)*Math.sqrt((fck/(modulusOfElasticity*1000))),2);
      }
+     default Double coefficientOfFlexibility(Double bC,Double relativeSlenderness){
+         return round(0.5*(1 + bC *( relativeSlenderness-0.3 ) + Math.pow(relativeSlenderness,2)),2);
+     }
+     default Double coefficientOfBuckling (Double coefficientOfFlexibility,Double relativeSlenderness){
+         return round(1 / (coefficientOfFlexibility + Math.sqrt(Math.pow(coefficientOfFlexibility,2) - Math.pow(relativeSlenderness,2))),2);
+     }
 
 
      static double round (double value, int places){
