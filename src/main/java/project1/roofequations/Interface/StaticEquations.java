@@ -32,6 +32,18 @@ public interface StaticEquations {
      default Double valueOfNad(Double Rha,Double computationalParallelStrain,Double distanceFromLinchpinToPlaceOfMaximumMomentumOfMad){
          return round(Rha-(computationalParallelStrain*distanceFromLinchpinToPlaceOfMaximumMomentumOfMad),2);
      }
+     default Double crossSectionalAreaOfWoodBasedMaterial (Double width,Double height){
+         return round((2*39*width)+(8*(height-2*39)),2);
+     }
+     default Double bucklingLength (Double u,Double LowerPartOfRafter){
+         return round(u*LowerPartOfRafter,2);
+     }
+     default Double defaultSlim (Double bucklingLength,Double momentOfInertia){
+         return round((bucklingLength*1000)/momentOfInertia,2);
+     }
+     default Double relativeSlenderness( Double defaultSlim, Double fck,Double modulusOfElasticity){
+         return round((defaultSlim/Math.PI)*Math.sqrt((fck/(modulusOfElasticity*1000))),2);
+     }
 
 
      static double round (double value, int places){

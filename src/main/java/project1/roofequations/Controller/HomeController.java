@@ -45,7 +45,7 @@ public class HomeController extends HomeControllerService implements HGirderRepo
                           @RequestParam(required = false) Double heightOfBuilding,
                           @RequestParam(required = false) Double spacing,
                           @RequestParam(required = false) Double userOwnBuildingStrain,
-                          //   @RequestParam(required = false) Object hGirder,
+                          @RequestParam(required = false) Long HGirderId,
                           ModelMap map) {
 
 
@@ -269,6 +269,16 @@ public class HomeController extends HomeControllerService implements HGirderRepo
                             .getComputationalPerpendicularOwnStrain(), roof.getLengthOfRafter()) + staticEquations.perpendicularReactionsToRoofPour(0.2413, wholeStrainModel
                             .getComputationalPerpendicularSnowStrainOfMajorPour(), roof.getLengthOfRafter()) + staticEquations.perpendicularReactionsToRoofPour(0.2413, wholeStrainModel
                             .getComputationalPerpendicularStrainOfWindwardSide(), roof.getLengthOfRafter()),wholeStrainModel.getComputationalPerpendicularOwnStrain()+ wholeStrainModel.getComputationalParallelSnowStrainOfMajorPour())));
+
+            map.put("K", staticEquations.crossSectionalAreaOfWoodBasedMaterial(hGirderRepository.findById(HGirderId).get().getWidth(),hGirderRepository.findById(HGirderId).get().getHeight()));
+
+            map.put("L",staticEquations.bucklingLength(1.0,roof.getLowerPartOfRafter()));
+
+            map.put("M",staticEquations.defaultSlim(staticEquations.bucklingLength(1.0,roof.getLowerPartOfRafter()),hGirderRepository.findById(HGirderId).get().getMomentOfInertia()));
+            //lvl
+            map.put("N",staticEquations.relativeSlenderness(staticEquations.defaultSlim(staticEquations.bucklingLength(1.0,roof.getLowerPartOfRafter()),hGirderRepository.findById(HGirderId).get().getMomentOfInertia()),36.00,hGirderRepository.findById(HGirderId).get().getModulusOfElasticity()));
+            //HB
+            map.put("O",staticEquations.relativeSlenderness(staticEquations.defaultSlim(staticEquations.bucklingLength(1.0,roof.getLowerPartOfRafter()),hGirderRepository.findById(HGirderId).get().getMomentOfInertia()),21.00,hGirderRepository.findById(HGirderId).get().getModulusOfElasticity()));
 
             return "RoofDimensions";
         }
