@@ -50,6 +50,13 @@ public interface StaticEquations {
      default Double coefficientOfBuckling (Double coefficientOfFlexibility,Double relativeSlenderness){
          return round(1 / (coefficientOfFlexibility + Math.sqrt(Math.pow(coefficientOfFlexibility,2) - Math.pow(relativeSlenderness,2))),2);
      }
+     default Double materialEndurance (Double momentOfSecondDegreeInertia, Double hGirderHeight){
+         return round(momentOfSecondDegreeInertia/(hGirderHeight/2),2);
+     }
+
+     default Double computationalCompressiveTensionAlongFibres(Double nAD,Double crossSectionalArea){
+         return round(nAD/crossSectionalArea,2);
+     }
 
 
      static double round (double value, int places){
