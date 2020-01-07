@@ -50,6 +50,18 @@ header{
     margin: 20px 10px 20px 10px;
     font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
 }
+#reactions{
+    position: center;
+    margin: 20px 10px 20px 10px;
+    width: 800px;
+    height: 400px;
+}
+#scheme{
+    position: center;
+    margin: 20px 10px 20px 10px;
+    width: 800px;
+    height: 400px;
+}
 p{
     text-align-all: center;
     font-size: 150%;

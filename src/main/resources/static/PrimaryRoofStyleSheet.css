@@ -230,3 +230,27 @@ label[for="zone3"]{
     border-width: 5px;
     border-color: black;
 }
+label[for="spacing"]{
+    margin: 10px 10px 10px 10px;
+    font-size: x-large;
+}
+#spacing {
+    margin: 10px 10px 10px 10px;
+    font-size: x-large;
+}
+label[for="userOwnBuildingStrain"]{
+    margin: 10px 10px 10px 10px;
+    font-size: x-large;
+}
+#userOwnBuildingStrain {
+    margin: 10px 10px 10px 10px;
+    font-size: x-large;
+}
+label[for="HGirderId"]{
+    margin: 10px 10px 10px 10px;
+    font-size: x-large;
+}
+#HGirderId {
+    margin: 10px 10px 10px 10px;
+    font-size: x-large;
+}

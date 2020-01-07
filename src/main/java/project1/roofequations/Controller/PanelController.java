@@ -45,10 +45,6 @@ public class PanelController implements HGirderRepository {
         return "Saved";
     }
     @RequestMapping(value = "/panel/{materials}")
-  //  @ResponseBody
-  //  public String method( @PathVariable ("materials") int id ){
-  //      return "Panel";
-  //  }
     @ResponseBody
     public ResponseEntity<Object> findAllById(@PathVariable String materials){
         return new ResponseEntity<>(hGirderRepository.findAll(), HttpStatus.OK);
