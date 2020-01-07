@@ -13,43 +13,83 @@
 <p2 th:text="${values}" id="results2"></p2>
 <img src="truss2.jpg" id="truss2" alt="primary static attributes">
 <a href="/" id="return"> Calculate again  </a>
-<p3 id="snowStrain">Values of snow Strain </p3>
-<p4 th:text="${values1}" id="results3"></p4>
-<p5 id="windStrain">Values of wind Strain </p5>
-<p6 th:text="${values2}" id="results4"></p6>
-<p7 id="Strain">Values of whole Strain </p7>
-<p8 th:text="${values3}" id="results5"></p8>
-<p9 id="MD">Values of bending moments on MD linchpin</p9>
-<p10 th:text="${A}" id="MD1"></p10>
-<p11 id="MAD">Values of bending moments on M AD linchpin</p11>
-<p12 th:text="${B}" id="MAD1"></p12>
-<p13 id="RA">Ra</p13>
-<p14 th:text="${C}" id="RA1"></p14>
-<p15 id="RC">Rc</p15>
-<p16 th:text="${D}" id="RC1"></p16>
-<p17 id="RC'">Rc'</p17>
-<p18 th:text="${E}" id="RC'1"></p18>
-<p19 id="RD">Rd</p19>
-<p20 th:text="${F}" id="RD1"></p20>
-<p21 id="ND">ND</p21>
-<p22 th:text="${G}" id="ND1"></p22>
-<p23 id="Rha">Rha</p23>
-<p24 th:text="${H}" id="Rha1"></p24>
-<p25 id="x">x</p25>
-<p26 th:text="${I}" id="x1"></p26>
-<p27 id="Nad">Nad</p27>
-<p28 th:text="${J}" id="Nad1"></p28>
-<p29 id="cross">crossSectionalAreaOfWoodBasedMaterial</p29>
-<p30 th:text="${K}" id="cross1"></p30>
-<p31 id="bl">bucklingLength</p31>
-<p32 th:text="${L}" id="bl1"></p32>
-<p33 id="ds">defaultSlim</p33>
-<p34 th:text="${M}" id="ds1"></p34>
-<p35 id="lvl">relativeSlenderness of LVL</p35>
-<p36 th:text="${N}" id="lvl1"></p36>
-<p37 id="hb">relativeSlenderness of HB</p37>
-<p38 th:text="${O}" id="hb1"></p38>
-
+<p id="snowStrain">Values of snow Strain </p>
+<p th:text="${values1}" id="results3"></p>
+<p id="windStrain">Values of wind Strain </p>
+<p th:text="${values2}" id="results4"></p>
+<p id="Strain">Values of whole Strain </p>
+<p th:text="${values3}" id="results5"></p>
+<p id="MD">Values of bending moments on MD linchpin [kN · m]</p>
+<p th:text="${A}" id="MD1"></p>
+<p id="MAD">Values of bending moments on M AD linchpin [kN · m]</p>
+<p th:text="${B}" id="MAD1"></p>
+<p id="RA">Sum of reaction on Ra linchpin [kN]</p>
+<p th:text="${C}" id="RA1"></p>
+<p id="RC">Sum of reaction on Rc linchpin [kN]</p>
+<p th:text="${D}" id="RC1"></p>
+<p id="RC'">Sum of reaction on Rc' linchpin [kN]</p>
+<p th:text="${E}" id="RC'1"></p>
+<p id="RD">Sum of reaction on Rd linchpin [kN]</p>
+<p th:text="${F}" id="RD1"></p>
+<p id="ND">Bending strength on N linchpin, Nd [kN]</p>
+<p th:text="${G}" id="ND1"></p>
+<p id="Rha">Strength in Ad span, Rha [kN] </p>
+<p th:text="${H}" id="Rha1"></p>
+<p id="x">distance From Linchpin To Place Of Maximum Momentum Of Mad, x [m]</p>
+<p th:text="${I}" id="x1"></p>
+<p id="Nad">Strength occur in distance From Linchpin To Place Of Maximum Momentum Of Mad, Nad [kN] </p>
+<p th:text="${J}" id="Nad1"></p>
+<p id="cross">crossSectionalAreaOfWoodBasedMaterial [mm2]</p>
+<p th:text="${K}" id="cross1"></p>
+<p id="bl">buckling Length [m]</p>
+<p th:text="${L}" id="bl1"></p>
+<p id="ds">default Slim [-]</p>
+<p th:text="${M}" id="ds1"></p>
+<p id="lvl">relativeSlenderness of LVL [-]</p>
+<p th:text="${N}" id="lvl1"></p>
+<p id="hb">relativeSlenderness of HB [-]</p>
+<p th:text="${O}" id="hb1"></p>
+<p id="cf">coefficientOfFlexibility [-]</p>
+<p th:text="${P}" id="cf1"></p>
+<p id="cb">coefficientOfBuckling [-]</p>
+<p th:text="${R}" id="cb1"></p>
+<p id="me">material Endurance [mm3]</p>
+<p th:text="${U}" id="me1"></p>
+<p >tensions on a span:</p>
+<p id="cctaf">computational Compressive Tension Along Fibres [MPa]</p>
+<p th:text="${S}" id="cctaf1"></p>
+<p id="ctaya">computational Tension Along Y Axis [MPa] </p>
+<p th:text="${W}" id="ctaya1"></p>
+<p id="bcol">bearing Capacity Of LVL value should be lower than 1</p>
+<p th:text="${Z}" id="bcol1"></p>
+<p id="bcohb">bearing Capacity Of HB value should be lower than 1</p>
+<p th:text="${A1}" id="bcohb1"></p>
+<p >tensions on a Linchpin:</p>
+<p id="cctaf2"> computational Compressive Tension Along Fibres [MPa]</p>
+<p th:text="${B1}" id="cctaf21"></p>
+<p id="ctaya2">computational Tension Along Y Axis [MPa] </p>
+<p th:text="${C1}" id="ctaya21"></p>
+<p id="bcollvl2">bearing Capacity On Linchpin LVL should be lower than 1</p>
+<p th:text="${D1}" id="bcollvl21"></p>
+<p id="bcolhb2">bearing Capacity On Linchpin HB should be lower than 1</p>
+<p th:text="${E1}" id="bcolhb21"></p>
+<p>serviceabilityLimits:</p>
+<p id="slsoos">serviceability Limit State of OwnStrain [mm]</p>
+<p th:text="${F1}" id="slsoos1"></p>
+<p id="fsloos">finalServiceabilityLimitStateOfOwnStrain [mm]</p>
+<p th:text="${G1}" id="fsloos1"></p>
+<p id="slsoss">serviceabilityLimitState of snowStrain [mm] </p>
+<p th:text="${H1}" id="slsoss1"></p>
+<p id="slsows">serviceabilityLimitState of windStrain [mm]</p>
+<p th:text="${I1}" id="slsows1"></p>
+<p id="fslsows">finalServiceabilityLimitState of windStrain [mm]</p>
+<p th:text="${J1}" id="fslsows1"></p>
+<p id="fwsls">finalWholeServiceabilityLimitState [mm]</p>
+<p th:text="${K1}" id="fwsls1"></p>
+<p id="mb">max bend [mm]</p>
+<p th:text="${L1}" id="mb1"></p>
+<p id="level">level of usage of crossSectionalAreaOfWoodBasedMaterial [%] </p>
+<p th:text="${M1}" id="level1"></p>
 
 </body>
 </html>
