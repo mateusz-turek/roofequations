@@ -1,7 +1,11 @@
 package project1.roofequations.service;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class HomeControllerService {
-    protected boolean widthValidator(String width) {
+
+    public boolean widthValidator(String width) {
         return !width.equals("") &&
                 !width.matches(".*[a-zA-Z]+.*") &&
                 !width.startsWith(",") &&
@@ -11,7 +15,7 @@ public class HomeControllerService {
                 !width.contains("*");
     }
 
-    protected Double widthChanger(String width) {
+    public Double widthChanger(String width) {
         StringBuilder widthChanger = new StringBuilder(width);
         if (width.contains(",")) {
             int counter = 0;
@@ -47,9 +51,9 @@ public class HomeControllerService {
         return Double.valueOf(widthChanger.toString());
     }
 
-    protected boolean angleValidator(Double angle) {
+    public boolean angleValidator(Double angle) {
         return angle != null;
     }
 
-    protected boolean cityValidator (String city) {return city !=null;}
+    public boolean cityValidator(String city) {return city !=null;}
 }

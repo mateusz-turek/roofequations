@@ -15,18 +15,18 @@ import java.util.Optional;
 
 
 @Controller
-public class HomeController extends HomeControllerService implements HGirderRepository, StaticEquations {
+public class HomeController implements StaticEquations {
+
+    private HomeControllerService homeControllerService;
+
     private HGirderRepository hGirderRepository;
 
+
     @Autowired
-    private StaticEquations staticEquations;
-
-
-    public HomeController(@Qualifier("HGirder") HGirderRepository hGirderRepository) {
+    public HomeController(HomeControllerService homeControllerService, @Qualifier("HGirderRepository") HGirderRepository hGirderRepository) {
+        this.homeControllerService = homeControllerService;
         this.hGirderRepository = hGirderRepository;
-
     }
-
 
     @GetMapping("/")
     public String PrimaryAttributes(ModelMap map) {
@@ -49,16 +49,16 @@ public class HomeController extends HomeControllerService implements HGirderRepo
                           ModelMap map) {
 
 
-        if (!widthValidator(width) ||
-                !angleValidator(angle) ||
-                !cityValidator(city) ||
-                widthChanger(width) == null ||
-                widthChanger(width) <= 0) {
+        if (!homeControllerService.widthValidator(width) ||
+                !homeControllerService.angleValidator(angle) ||
+                !homeControllerService.cityValidator(city) ||
+                homeControllerService.widthChanger(width) == null ||
+                homeControllerService.widthChanger(width) <= 0) {
             return "WrongAttributes";
         } else {
 
             RoofModel roof = new RoofModel();
-            roof.setWidth(widthChanger(width));
+            roof.setWidth(homeControllerService.widthChanger(width));
             roof.setAngle(angle);
             roof.setProportion();
             roof.setRoofHeight(roof.getWidth(), roof.getAngle());
@@ -274,89 +274,72 @@ public class HomeController extends HomeControllerService implements HGirderRepo
             if (roof.getProportion() == 0.6)
                 //own Strain
 
-                staticEquations.bendingMomentsInRafterOnMDLinchpin(-0.035, wholeStrainModel
+                bendingMomentsInRafterOnMDLinchpin(-0.035, wholeStrainModel
                         .getComputationalPerpendicularOwnStrain(), roof.getLengthOfRafter());
             //snow Strain
-            staticEquations.bendingMomentsInRafterOnMDLinchpin(-0.035, wholeStrainModel
+            bendingMomentsInRafterOnMDLinchpin(-0.035, wholeStrainModel
                     .getComputationalPerpendicularSnowStrainOfMajorPour(), roof.getLengthOfRafter());
             //wind Strain
-            staticEquations.bendingMomentsInRafterOnMDLinchpin(-0.035, wholeStrainModel
+            bendingMomentsInRafterOnMDLinchpin(-0.035, wholeStrainModel
                     .getComputationalPerpendicularStrainOfWindwardSide(), roof.getLengthOfRafter());
 
-            map.put("A", staticEquations
-                    .bendingMomentsInRafterOnMDLinchpin(-0.035, wholeStrainModel
+            map.put("A", bendingMomentsInRafterOnMDLinchpin(-0.035, wholeStrainModel
                             .getComputationalPerpendicularOwnStrain(), roof
-                            .getLengthOfRafter()) + staticEquations
-                    .bendingMomentsInRafterOnMDLinchpin(-0.035, wholeStrainModel
+                            .getLengthOfRafter()) + bendingMomentsInRafterOnMDLinchpin(-0.035, wholeStrainModel
                             .getComputationalPerpendicularSnowStrainOfMajorPour(), roof
-                            .getLengthOfRafter()) + staticEquations
-                    .bendingMomentsInRafterOnMDLinchpin(-0.035, wholeStrainModel
+                            .getLengthOfRafter()) + bendingMomentsInRafterOnMDLinchpin(-0.035, wholeStrainModel
                             .getComputationalPerpendicularStrainOfWindwardSide(), roof
                             .getLengthOfRafter()));
 
-            staticEquations
-                    .bendingMomentsInRafterOnMDLinchpin(0.0292, wholeStrainModel
+                    bendingMomentsInRafterOnMDLinchpin(0.0292, wholeStrainModel
                             .getComputationalPerpendicularOwnStrain(), roof.getLengthOfRafter());
-            staticEquations
-                    .bendingMomentsInRafterOnMDLinchpin(0.0292, wholeStrainModel
+
+                    bendingMomentsInRafterOnMDLinchpin(0.0292, wholeStrainModel
                             .getComputationalPerpendicularSnowStrainOfMajorPour(), roof
                             .getLengthOfRafter());
-            staticEquations
-                    .bendingMomentsInRafterOnMDLinchpin(0.0292, wholeStrainModel
+
+            bendingMomentsInRafterOnMDLinchpin(0.0292, wholeStrainModel
                             .getComputationalPerpendicularStrainOfWindwardSide(), roof
                             .getLengthOfRafter());
 
-            map.put("B", staticEquations
-                    .bendingMomentsInRafterOnMDLinchpin(0.0292, wholeStrainModel
+            map.put("B", bendingMomentsInRafterOnMDLinchpin(0.0292, wholeStrainModel
                             .getComputationalPerpendicularOwnStrain(), roof
-                            .getLengthOfRafter()) + staticEquations
-                    .bendingMomentsInRafterOnMDLinchpin(0.0292, wholeStrainModel
+                            .getLengthOfRafter()) + bendingMomentsInRafterOnMDLinchpin(0.0292, wholeStrainModel
                             .getComputationalPerpendicularSnowStrainOfMajorPour(), roof
-                            .getLengthOfRafter()) + staticEquations
-                    .bendingMomentsInRafterOnMDLinchpin(0.0292, wholeStrainModel
+                            .getLengthOfRafter()) + bendingMomentsInRafterOnMDLinchpin(0.0292, wholeStrainModel
                             .getComputationalPerpendicularStrainOfWindwardSide(), roof
                             .getLengthOfRafter()));
 
-            map.put("C", staticEquations.perpendicularReactionsToRoofPour(0.2413, wholeStrainModel
+            map.put("C", perpendicularReactionsToRoofPour(0.2413, wholeStrainModel
                     .getComputationalPerpendicularOwnStrain(), roof
-                    .getLengthOfRafter()) + staticEquations
-                    .perpendicularReactionsToRoofPour(0.2413, wholeStrainModel
+                    .getLengthOfRafter()) + perpendicularReactionsToRoofPour(0.2413, wholeStrainModel
                             .getComputationalPerpendicularSnowStrainOfMajorPour(), roof
-                            .getLengthOfRafter()) + staticEquations
-                    .perpendicularReactionsToRoofPour(0.2413, wholeStrainModel
+                            .getLengthOfRafter()) + perpendicularReactionsToRoofPour(0.2413, wholeStrainModel
                             .getComputationalPerpendicularStrainOfWindwardSide(), roof.getLengthOfRafter()));
 
-            map.put("D", staticEquations.perpendicularReactionsToRoofPour(0.113, wholeStrainModel
+            map.put("D", perpendicularReactionsToRoofPour(0.113, wholeStrainModel
                     .getComputationalPerpendicularOwnStrain(), roof
-                    .getLengthOfRafter()) + staticEquations
-                    .perpendicularReactionsToRoofPour(0.113, wholeStrainModel
+                    .getLengthOfRafter()) + perpendicularReactionsToRoofPour(0.113, wholeStrainModel
                             .getComputationalPerpendicularSnowStrainOfMajorPour(), roof
-                            .getLengthOfRafter()) + staticEquations
-                    .perpendicularReactionsToRoofPour(0.113, wholeStrainModel
+                            .getLengthOfRafter()) + perpendicularReactionsToRoofPour(0.113, wholeStrainModel
                             .getComputationalPerpendicularStrainOfWindwardSide(), roof.getLengthOfRafter()));
 
-            map.put("E", staticEquations
-                    .perpendicularReactionsToRoofPour(0.113, wholeStrainModel
-                            .getComputationalPerpendicularOwnStrain(), roof.getLengthOfRafter()) + staticEquations
-                    .perpendicularReactionsToRoofPour(0.113, wholeStrainModel
+            map.put("E", perpendicularReactionsToRoofPour(0.113, wholeStrainModel
+                            .getComputationalPerpendicularOwnStrain(), roof.getLengthOfRafter()) + perpendicularReactionsToRoofPour(0.113, wholeStrainModel
                             .getComputationalPerpendicularSnowStrainOfMajorPour(), roof
-                            .getLengthOfRafter()) + staticEquations
-                    .perpendicularReactionsToRoofPour(0.113, wholeStrainModel
+                            .getLengthOfRafter()) + perpendicularReactionsToRoofPour(0.113, wholeStrainModel
                             .getComputationalPerpendicularStrainOfLeewardSide(), roof.getLengthOfRafter()));
 
-            map.put("F", staticEquations.perpendicularReactionsToRoofPour(0.6457, wholeStrainModel
+            map.put("F", perpendicularReactionsToRoofPour(0.6457, wholeStrainModel
                     .getComputationalPerpendicularOwnStrain(), roof
-                    .getLengthOfRafter()) + staticEquations
-                    .perpendicularReactionsToRoofPour(0.6457, wholeStrainModel
+                    .getLengthOfRafter()) + perpendicularReactionsToRoofPour(0.6457, wholeStrainModel
                             .getComputationalPerpendicularSnowStrainOfMajorPour(), roof
-                            .getLengthOfRafter()) + staticEquations
-                    .perpendicularReactionsToRoofPour(0.6457, wholeStrainModel
+                            .getLengthOfRafter()) +
+                    perpendicularReactionsToRoofPour(0.6457, wholeStrainModel
                             .getComputationalPerpendicularStrainOfWindwardSide(), roof.getLengthOfRafter()));
 
             //  staticEquations.getC1(wholeStrainModel.getAngle(),wholeStrainModel.getComputationalParallelOwnStrain()+wholeStrainModel.getComputationalParallelSnowStrainOfMajorPour());
-            map.put("G", staticEquations
-                    .compressiveStrengthOnDLinchpin(staticEquations
-                                    .getC1(wholeStrainModel
+            map.put("G", compressiveStrengthOnDLinchpin(getC1(wholeStrainModel
                                             .getAngle(), wholeStrainModel
                                             .getComputationalParallelOwnStrain() + wholeStrainModel
                                             .getComputationalParallelSnowStrainOfMajorPour())
@@ -364,49 +347,40 @@ public class HomeController extends HomeControllerService implements HGirderRepo
                                     .getComputationalParallelOwnStrain() + wholeStrainModel
                                     .getComputationalParallelSnowStrainOfMajorPour(), roof.getUpperPartOfRafter()));
 
-            map.put("H", staticEquations
-                    .strengthInADSpan(wholeStrainModel
+            map.put("H",strengthInADSpan(wholeStrainModel
                                     .getComputationalParallelOwnStrain() + wholeStrainModel
                                     .getComputationalParallelSnowStrainOfMajorPour(),
                             roof.getLowerPartOfRafter()));
 
-            map.put("I", staticEquations
-                    .distanceFromLinchpinToPlaceOfMaximumMomentumOfMad(staticEquations
-                            .perpendicularReactionsToRoofPour(0.2413, wholeStrainModel
+            map.put("I", distanceFromLinchpinToPlaceOfMaximumMomentumOfMad(perpendicularReactionsToRoofPour(0.2413, wholeStrainModel
                                     .getComputationalPerpendicularOwnStrain(), roof
-                                    .getLengthOfRafter()) + staticEquations
-                            .perpendicularReactionsToRoofPour(0.2413, wholeStrainModel
+                                    .getLengthOfRafter()) + perpendicularReactionsToRoofPour(0.2413, wholeStrainModel
                                     .getComputationalPerpendicularSnowStrainOfMajorPour(), roof
-                                    .getLengthOfRafter()) + staticEquations
-                            .perpendicularReactionsToRoofPour(0.2413, wholeStrainModel
+                                    .getLengthOfRafter()) + perpendicularReactionsToRoofPour(0.2413, wholeStrainModel
                                     .getComputationalPerpendicularStrainOfWindwardSide(), roof
                                     .getLengthOfRafter()), wholeStrainModel
                             .getComputationalPerpendicularOwnStrain() + wholeStrainModel
                             .getComputationalPerpendicularSnowStrainOfMajorPour()));
 
-            map.put("J", -1 * (staticEquations
-                    .valueOfNad(staticEquations
-                            .strengthInADSpan(wholeStrainModel
+            map.put("J", -1 * (valueOfNad(strengthInADSpan(wholeStrainModel
                                             .getComputationalParallelOwnStrain() + wholeStrainModel
                                             .getComputationalParallelSnowStrainOfMajorPour(),
                                     roof.getLowerPartOfRafter()), wholeStrainModel
                             .getComputationalParallelOwnStrain() + wholeStrainModel
-                            .getComputationalParallelSnowStrainOfMajorPour(), staticEquations
-                            .distanceFromLinchpinToPlaceOfMaximumMomentumOfMad(staticEquations
-                                    .perpendicularReactionsToRoofPour(0.2413, wholeStrainModel
+                            .getComputationalParallelSnowStrainOfMajorPour(),
+                    distanceFromLinchpinToPlaceOfMaximumMomentumOfMad(
+                                    perpendicularReactionsToRoofPour(0.2413, wholeStrainModel
                                             .getComputationalPerpendicularOwnStrain(), roof
-                                            .getLengthOfRafter()) + staticEquations
-                                    .perpendicularReactionsToRoofPour(0.2413, wholeStrainModel
+                                            .getLengthOfRafter()) +
+                            perpendicularReactionsToRoofPour(0.2413, wholeStrainModel
                                             .getComputationalPerpendicularSnowStrainOfMajorPour(), roof
-                                            .getLengthOfRafter()) + staticEquations
-                                    .perpendicularReactionsToRoofPour(0.2413, wholeStrainModel
+                                            .getLengthOfRafter()) + perpendicularReactionsToRoofPour(0.2413, wholeStrainModel
                                             .getComputationalPerpendicularStrainOfWindwardSide(), roof
                                             .getLengthOfRafter()), wholeStrainModel
                                     .getComputationalPerpendicularOwnStrain() + wholeStrainModel
                                     .getComputationalParallelSnowStrainOfMajorPour()))));
 
-            map.put("K", staticEquations
-                    .crossSectionalAreaOfWoodBasedMaterial(hGirderRepository
+            map.put("K", crossSectionalAreaOfWoodBasedMaterial(hGirderRepository
                             .findById(HGirderId)
                             .get()
                             .getWidth(), hGirderRepository
@@ -414,20 +388,15 @@ public class HomeController extends HomeControllerService implements HGirderRepo
                             .get()
                             .getHeight()));
 
-            map.put("L", staticEquations.bucklingLength(1.0, roof.getLowerPartOfRafter()));
+            map.put("L",bucklingLength(1.0, roof.getLowerPartOfRafter()));
 
-            map.put("M", staticEquations
-                    .defaultSlim(staticEquations
-                            .bucklingLength(1.0, roof
+            map.put("M", defaultSlim(bucklingLength(1.0, roof
                                     .getLowerPartOfRafter()), hGirderRepository
                             .findById(HGirderId)
                             .get()
                             .getMomentOfInertia()));
             //lvl
-            map.put("N", staticEquations
-                    .relativeSlenderness(staticEquations
-                            .defaultSlim(staticEquations
-                                    .bucklingLength(1.0, roof
+            map.put("N",relativeSlenderness(defaultSlim(bucklingLength(1.0, roof
                                             .getLowerPartOfRafter()), hGirderRepository
                                     .findById(HGirderId)
                                     .get()
@@ -436,10 +405,7 @@ public class HomeController extends HomeControllerService implements HGirderRepo
                             .get()
                             .getModulusOfElasticity()));
             //HB
-            map.put("O", staticEquations
-                    .relativeSlenderness(staticEquations
-                            .defaultSlim(staticEquations
-                                    .bucklingLength(1.0, roof
+            map.put("O",relativeSlenderness(defaultSlim(bucklingLength(1.0, roof
                                             .getLowerPartOfRafter()), hGirderRepository
                                     .findById(HGirderId)
                                     .get()
@@ -448,11 +414,7 @@ public class HomeController extends HomeControllerService implements HGirderRepo
                             .get()
                             .getModulusOfElasticity()));
             //flex
-            map.put("P", staticEquations
-                    .coefficientOfFlexibility(0.1, staticEquations
-                            .relativeSlenderness(staticEquations
-                                    .defaultSlim(staticEquations
-                                            .bucklingLength(1.0, roof
+            map.put("P",coefficientOfFlexibility(0.1, relativeSlenderness(defaultSlim(bucklingLength(1.0, roof
                                                     .getLowerPartOfRafter()), hGirderRepository
                                             .findById(HGirderId)
                                             .get()
@@ -461,22 +423,16 @@ public class HomeController extends HomeControllerService implements HGirderRepo
                                     .get()
                                     .getModulusOfElasticity())));
             //buckling
-            map.put("R", staticEquations
-                    .coefficientOfBuckling(staticEquations
-                            .coefficientOfFlexibility(0.1, staticEquations
-                                    .relativeSlenderness(staticEquations
-                                            .defaultSlim(staticEquations
-                                                    .bucklingLength(1.0, roof
+            map.put("R",coefficientOfBuckling(coefficientOfFlexibility(0.1,
+                    relativeSlenderness(defaultSlim(bucklingLength(1.0, roof
                                                             .getLowerPartOfRafter()), hGirderRepository
                                                     .findById(HGirderId)
                                                     .get()
                                                     .getMomentOfInertia()), 21.00, hGirderRepository
                                             .findById(HGirderId)
                                             .get()
-                                            .getModulusOfElasticity())), staticEquations
-                            .relativeSlenderness(staticEquations
-                                    .defaultSlim(staticEquations
-                                            .bucklingLength(1.0, roof
+                                            .getModulusOfElasticity())),
+                            relativeSlenderness(defaultSlim(bucklingLength(1.0, roof
                                                     .getLowerPartOfRafter()), hGirderRepository
                                             .findById(HGirderId)
                                             .get()
@@ -485,30 +441,26 @@ public class HomeController extends HomeControllerService implements HGirderRepo
                                     .get()
                                     .getModulusOfElasticity())));
             //computationalCompressiveTensionAlongFibres
-            map.put("S", staticEquations
-                    .computationalCompressiveTensionAlongFibres(staticEquations
-                            .valueOfNad(staticEquations
-                                            .strengthInADSpan(wholeStrainModel
+            map.put("S",computationalCompressiveTensionAlongFibres(valueOfNad(strengthInADSpan(wholeStrainModel
                                                             .getComputationalParallelOwnStrain() + wholeStrainModel
                                                             .getComputationalParallelSnowStrainOfMajorPour(),
                                                     roof
                                                             .getLowerPartOfRafter()), wholeStrainModel
                                             .getComputationalParallelOwnStrain() + wholeStrainModel
                                             .getComputationalParallelSnowStrainOfMajorPour()
-                                    , staticEquations
-                                            .distanceFromLinchpinToPlaceOfMaximumMomentumOfMad(staticEquations
-                                                    .perpendicularReactionsToRoofPour(0.2413, wholeStrainModel
+                                    , distanceFromLinchpinToPlaceOfMaximumMomentumOfMad(
+                                                    perpendicularReactionsToRoofPour(0.2413, wholeStrainModel
                                                             .getComputationalPerpendicularOwnStrain(), roof
-                                                            .getLengthOfRafter()) + staticEquations
-                                                    .perpendicularReactionsToRoofPour(0.2413, wholeStrainModel
+                                                            .getLengthOfRafter()) +
+                                                    perpendicularReactionsToRoofPour(0.2413, wholeStrainModel
                                                             .getComputationalPerpendicularSnowStrainOfMajorPour(), roof
-                                                            .getLengthOfRafter()) + staticEquations
-                                                    .perpendicularReactionsToRoofPour(0.2413, wholeStrainModel
+                                                            .getLengthOfRafter()) +
+                                                    perpendicularReactionsToRoofPour(0.2413, wholeStrainModel
                                                             .getComputationalPerpendicularStrainOfWindwardSide(), roof
                                                             .getLengthOfRafter()), wholeStrainModel
                                                     .getComputationalPerpendicularOwnStrain() + wholeStrainModel
-                                                    .getComputationalParallelSnowStrainOfMajorPour())), staticEquations
-                            .crossSectionalAreaOfWoodBasedMaterial(hGirderRepository.findById(HGirderId)
+                                                    .getComputationalParallelSnowStrainOfMajorPour())),
+                            crossSectionalAreaOfWoodBasedMaterial(hGirderRepository.findById(HGirderId)
                                     .get()
                                     .getWidth(), hGirderRepository
                                     .findById(HGirderId)
@@ -516,8 +468,7 @@ public class HomeController extends HomeControllerService implements HGirderRepo
                                     .getHeight())));
 
 
-            map.put("U", staticEquations
-                    .materialEndurance(hGirderRepository
+            map.put("U", materialEndurance(hGirderRepository
                             .findById(HGirderId)
                             .get()
                             .getMomentOfSecondDegreeInertia(), hGirderRepository
@@ -525,18 +476,17 @@ public class HomeController extends HomeControllerService implements HGirderRepo
                             .get()
                             .getHeight()));
 
-            map.put("W", staticEquations
-                    .computationalTensionAlongYAxis(staticEquations
-                            .bendingMomentsInRafterOnMDLinchpin(0.0292, wholeStrainModel
+            map.put("W", computationalTensionAlongYAxis(
+                    bendingMomentsInRafterOnMDLinchpin(0.0292, wholeStrainModel
                                     .getComputationalPerpendicularOwnStrain(), roof
-                                    .getLengthOfRafter()) + staticEquations
-                            .bendingMomentsInRafterOnMDLinchpin(0.0292, wholeStrainModel
+                                    .getLengthOfRafter()) +
+                            bendingMomentsInRafterOnMDLinchpin(0.0292, wholeStrainModel
                                     .getComputationalPerpendicularSnowStrainOfMajorPour(), roof
-                                    .getLengthOfRafter()) + staticEquations
-                            .bendingMomentsInRafterOnMDLinchpin(0.0292, wholeStrainModel
+                                    .getLengthOfRafter()) +
+                            bendingMomentsInRafterOnMDLinchpin(0.0292, wholeStrainModel
                                     .getComputationalPerpendicularStrainOfWindwardSide(), roof
-                                    .getLengthOfRafter()), staticEquations
-                            .materialEndurance(hGirderRepository
+                                    .getLengthOfRafter()),
+                            materialEndurance(hGirderRepository
                                     .findById(HGirderId)
                                     .get()
                                     .getMomentOfSecondDegreeInertia(), hGirderRepository
@@ -545,43 +495,41 @@ public class HomeController extends HomeControllerService implements HGirderRepo
                                     .getHeight())));
 
             //lvl
-            map.put("Z", staticEquations
-                    .bearingCapacity(staticEquations
-                                    .computationalCompressiveTensionAlongFibres(staticEquations
-                                            .valueOfNad(staticEquations
-                                                            .strengthInADSpan(wholeStrainModel
-                                                                            .getComputationalParallelOwnStrain() + wholeStrainModel
+            map.put("Z", bearingCapacity(computationalCompressiveTensionAlongFibres(
+                    valueOfNad(
+                            strengthInADSpan(
+                                    wholeStrainModel
+                                            .getComputationalParallelOwnStrain() + wholeStrainModel
                                                                             .getComputationalParallelSnowStrainOfMajorPour(),
                                                                     roof
                                                                             .getLowerPartOfRafter()), wholeStrainModel
                                                             .getComputationalParallelOwnStrain() + wholeStrainModel
-                                                            .getComputationalParallelSnowStrainOfMajorPour()
-                                                    , staticEquations
-                                                            .distanceFromLinchpinToPlaceOfMaximumMomentumOfMad(staticEquations
-                                                                    .perpendicularReactionsToRoofPour(0.2413, wholeStrainModel
+                                                            .getComputationalParallelSnowStrainOfMajorPour(),
+                            distanceFromLinchpinToPlaceOfMaximumMomentumOfMad(
+                                                                    perpendicularReactionsToRoofPour(0.2413, wholeStrainModel
                                                                             .getComputationalPerpendicularOwnStrain(), roof
-                                                                            .getLengthOfRafter()) + staticEquations
-                                                                    .perpendicularReactionsToRoofPour(0.2413, wholeStrainModel
+                                                                            .getLengthOfRafter()) +
+                                                                    perpendicularReactionsToRoofPour(0.2413, wholeStrainModel
                                                                             .getComputationalPerpendicularSnowStrainOfMajorPour(), roof
-                                                                            .getLengthOfRafter()) + staticEquations
-                                                                    .perpendicularReactionsToRoofPour(0.2413, wholeStrainModel
+                                                                            .getLengthOfRafter()) +
+                                                                    perpendicularReactionsToRoofPour(0.2413, wholeStrainModel
                                                                             .getComputationalPerpendicularStrainOfWindwardSide(), roof
                                                                             .getLengthOfRafter()), wholeStrainModel
                                                                     .getComputationalPerpendicularOwnStrain() + wholeStrainModel
-                                                                    .getComputationalParallelSnowStrainOfMajorPour())), staticEquations
-                                            .crossSectionalAreaOfWoodBasedMaterial(hGirderRepository
+                                                                    .getComputationalParallelSnowStrainOfMajorPour())),
+                                            crossSectionalAreaOfWoodBasedMaterial(hGirderRepository
                                                     .findById(HGirderId)
                                                     .get()
                                                     .getWidth(), hGirderRepository
                                                     .findById(HGirderId)
                                                     .get()
                                                     .getHeight()))
-                            , staticEquations
-                                    .coefficientOfBuckling(staticEquations
-                                                    .coefficientOfFlexibility(0.1, staticEquations
-                                                            .relativeSlenderness(staticEquations
-                                                                            .defaultSlim(staticEquations
-                                                                                    .bucklingLength(1.0, roof
+                            ,
+                                    coefficientOfBuckling(
+                                                    coefficientOfFlexibility(0.1,
+                                                            relativeSlenderness(
+                                                                            defaultSlim(
+                                                                                    bucklingLength(1.0, roof
                                                                                             .getLowerPartOfRafter()), hGirderRepository
                                                                                     .findById(HGirderId)
                                                                                     .get()
@@ -589,12 +537,8 @@ public class HomeController extends HomeControllerService implements HGirderRepo
                                                                     , 21.00
                                                                     , hGirderRepository
                                                                             .findById(HGirderId)
-                                                                            .get().getModulusOfElasticity()))
-                                            , staticEquations
-                                                    .relativeSlenderness(staticEquations
-                                                                    .defaultSlim(staticEquations
-                                                                                    .bucklingLength(1.0
-                                                                                            , roof
+                                                                            .get().getModulusOfElasticity())),
+                                            relativeSlenderness(defaultSlim(bucklingLength(1.0, roof
                                                                                                     .getLowerPartOfRafter())
                                                                             , hGirderRepository
                                                                                     .findById(HGirderId)
@@ -604,20 +548,14 @@ public class HomeController extends HomeControllerService implements HGirderRepo
                                                             , hGirderRepository
                                                                     .findById(HGirderId)
                                                                     .get()
-                                                                    .getModulusOfElasticity()))
-                            , 18.00
-                            , staticEquations
-                                    .computationalTensionAlongYAxis(staticEquations
-                                            .bendingMomentsInRafterOnMDLinchpin(0.0292, wholeStrainModel
+                                                                    .getModulusOfElasticity())), 18.00,
+                    computationalTensionAlongYAxis(bendingMomentsInRafterOnMDLinchpin(0.0292, wholeStrainModel
                                                     .getComputationalPerpendicularOwnStrain(), roof
-                                                    .getLengthOfRafter()) + staticEquations
-                                            .bendingMomentsInRafterOnMDLinchpin(0.0292, wholeStrainModel
+                                                    .getLengthOfRafter()) + bendingMomentsInRafterOnMDLinchpin(0.0292, wholeStrainModel
                                                     .getComputationalPerpendicularSnowStrainOfMajorPour(), roof
-                                                    .getLengthOfRafter()) + staticEquations
-                                            .bendingMomentsInRafterOnMDLinchpin(0.0292, wholeStrainModel
+                                                    .getLengthOfRafter()) + bendingMomentsInRafterOnMDLinchpin(0.0292, wholeStrainModel
                                                     .getComputationalPerpendicularStrainOfWindwardSide(), roof
-                                                    .getLengthOfRafter()), staticEquations
-                                            .materialEndurance(hGirderRepository
+                                                    .getLengthOfRafter()), materialEndurance(hGirderRepository
                                                     .findById(HGirderId)
                                                     .get()
                                                     .getMomentOfSecondDegreeInertia(), hGirderRepository
@@ -627,53 +565,48 @@ public class HomeController extends HomeControllerService implements HGirderRepo
                             , 28.80));
 
             //HB
-            map.put("A1", staticEquations
-                    .bearingCapacity(staticEquations
-                                    .computationalCompressiveTensionAlongFibres(staticEquations
-                                            .valueOfNad(staticEquations
-                                                            .strengthInADSpan(wholeStrainModel
+            map.put("A1", bearingCapacity(
+                    computationalCompressiveTensionAlongFibres(valueOfNad(
+                                                            strengthInADSpan(wholeStrainModel
                                                                             .getComputationalParallelOwnStrain() + wholeStrainModel
                                                                             .getComputationalParallelSnowStrainOfMajorPour(),
                                                                     roof
                                                                             .getLowerPartOfRafter()), wholeStrainModel
                                                             .getComputationalParallelOwnStrain() + wholeStrainModel
                                                             .getComputationalParallelSnowStrainOfMajorPour()
-                                                    , staticEquations
-                                                            .distanceFromLinchpinToPlaceOfMaximumMomentumOfMad(staticEquations
-                                                                    .perpendicularReactionsToRoofPour(0.2413, wholeStrainModel
+                                                    , distanceFromLinchpinToPlaceOfMaximumMomentumOfMad(
+                                                                    perpendicularReactionsToRoofPour(0.2413, wholeStrainModel
                                                                             .getComputationalPerpendicularOwnStrain(), roof
-                                                                            .getLengthOfRafter()) + staticEquations
-                                                                    .perpendicularReactionsToRoofPour(0.2413, wholeStrainModel
+                                                                            .getLengthOfRafter()) +
+                                                                    perpendicularReactionsToRoofPour(0.2413, wholeStrainModel
                                                                             .getComputationalPerpendicularSnowStrainOfMajorPour(), roof
-                                                                            .getLengthOfRafter()) + staticEquations
-                                                                    .perpendicularReactionsToRoofPour(0.2413, wholeStrainModel
+                                                                            .getLengthOfRafter()) +
+                                                                    perpendicularReactionsToRoofPour(0.2413, wholeStrainModel
                                                                             .getComputationalPerpendicularStrainOfWindwardSide(), roof
                                                                             .getLengthOfRafter()), wholeStrainModel
                                                                     .getComputationalPerpendicularOwnStrain() + wholeStrainModel
-                                                                    .getComputationalParallelSnowStrainOfMajorPour())), staticEquations
-                                            .crossSectionalAreaOfWoodBasedMaterial(hGirderRepository
+                                                                    .getComputationalParallelSnowStrainOfMajorPour())), crossSectionalAreaOfWoodBasedMaterial(hGirderRepository
                                                     .findById(HGirderId)
                                                     .get()
                                                     .getWidth(), hGirderRepository
                                                     .findById(HGirderId)
                                                     .get()
-                                                    .getHeight()))
-                            , staticEquations
-                                    .coefficientOfBuckling(staticEquations
-                                            .coefficientOfFlexibility(0.1, staticEquations
-                                                    .relativeSlenderness(staticEquations
-                                                            .defaultSlim(staticEquations
-                                                                    .bucklingLength(1.0, roof
+                                                    .getHeight())),
+                                    coefficientOfBuckling(
+                                            coefficientOfFlexibility(0.1,
+                                                    relativeSlenderness(
+                                                            defaultSlim(
+                                                                    bucklingLength(1.0, roof
                                                                             .getLowerPartOfRafter()), hGirderRepository
                                                                     .findById(HGirderId)
                                                                     .get()
                                                                     .getMomentOfInertia()), 21.00, hGirderRepository
                                                             .findById(HGirderId)
                                                             .get()
-                                                            .getModulusOfElasticity())), staticEquations
-                                            .relativeSlenderness(staticEquations
-                                                    .defaultSlim(staticEquations
-                                                            .bucklingLength(1.0, roof
+                                                            .getModulusOfElasticity())),
+                                            relativeSlenderness(
+                                                    defaultSlim(
+                                                            bucklingLength(1.0, roof
                                                                     .getLowerPartOfRafter()), hGirderRepository
                                                             .findById(HGirderId)
                                                             .get()
@@ -681,29 +614,23 @@ public class HomeController extends HomeControllerService implements HGirderRepo
                                                     .findById(HGirderId)
                                                     .get()
                                                     .getModulusOfElasticity()))
-                            , 9.69
-                            , staticEquations
-                                    .computationalTensionAlongYAxis(staticEquations
-                                            .bendingMomentsInRafterOnMDLinchpin(0.0292, wholeStrainModel
+                            , 9.69, computationalTensionAlongYAxis(
+                                            bendingMomentsInRafterOnMDLinchpin(0.0292, wholeStrainModel
                                                     .getComputationalPerpendicularOwnStrain(), roof
-                                                    .getLengthOfRafter()) + staticEquations
-                                            .bendingMomentsInRafterOnMDLinchpin(0.0292, wholeStrainModel
+                                                    .getLengthOfRafter()) + bendingMomentsInRafterOnMDLinchpin(0.0292, wholeStrainModel
                                                     .getComputationalPerpendicularSnowStrainOfMajorPour(), roof
-                                                    .getLengthOfRafter()) + staticEquations
-                                            .bendingMomentsInRafterOnMDLinchpin(0.0292, wholeStrainModel
+                                                    .getLengthOfRafter()) + bendingMomentsInRafterOnMDLinchpin(0.0292, wholeStrainModel
                                                     .getComputationalPerpendicularStrainOfWindwardSide(), roof
-                                                    .getLengthOfRafter()), staticEquations
-                                            .materialEndurance(hGirderRepository.findById(HGirderId)
+                                                    .getLengthOfRafter()), materialEndurance(hGirderRepository.findById(HGirderId)
                                                     .get()
                                                     .getMomentOfSecondDegreeInertia(), hGirderRepository
                                                     .findById(HGirderId)
                                                     .get()
                                                     .getHeight())), 14.31));
 
-            map.put("B1", staticEquations
-                    .computationalCompressiveTensionAlongFibres(staticEquations
-                                    .compressiveStrengthOnDLinchpin(staticEquations
-                                                    .getC1(wholeStrainModel
+            map.put("B1", computationalCompressiveTensionAlongFibres(
+                                    compressiveStrengthOnDLinchpin(
+                                                    getC1(wholeStrainModel
                                                             .getAngle(), wholeStrainModel
                                                             .getComputationalParallelOwnStrain() + wholeStrainModel
                                                             .getComputationalParallelSnowStrainOfMajorPour())
@@ -711,8 +638,7 @@ public class HomeController extends HomeControllerService implements HGirderRepo
                                                     .getComputationalParallelOwnStrain() + wholeStrainModel
                                                     .getComputationalParallelSnowStrainOfMajorPour(), roof
                                                     .getUpperPartOfRafter())
-                            , staticEquations
-                                    .crossSectionalAreaOfWoodBasedMaterial(hGirderRepository
+                            , crossSectionalAreaOfWoodBasedMaterial(hGirderRepository
                                             .findById(HGirderId)
                                             .get()
                                             .getWidth(), hGirderRepository
@@ -720,19 +646,17 @@ public class HomeController extends HomeControllerService implements HGirderRepo
                                             .get()
                                             .getHeight())));
 
-            map.put("C1", (-1 * staticEquations
-                    .computationalTensionAlongYAxis(staticEquations
-                                    .bendingMomentsInRafterOnMDLinchpin(-0.035, wholeStrainModel
+            map.put("C1", (-1 * computationalTensionAlongYAxis(
+                                    bendingMomentsInRafterOnMDLinchpin(-0.035, wholeStrainModel
                                             .getComputationalPerpendicularOwnStrain(), roof
-                                            .getLengthOfRafter()) + staticEquations
-                                    .bendingMomentsInRafterOnMDLinchpin(-0.035, wholeStrainModel
+                                            .getLengthOfRafter()) +
+                                    bendingMomentsInRafterOnMDLinchpin(-0.035, wholeStrainModel
                                             .getComputationalPerpendicularSnowStrainOfMajorPour(), roof
-                                            .getLengthOfRafter()) + staticEquations
-                                    .bendingMomentsInRafterOnMDLinchpin(-0.035, wholeStrainModel
+                                            .getLengthOfRafter()) +
+                                    bendingMomentsInRafterOnMDLinchpin(-0.035, wholeStrainModel
                                             .getComputationalPerpendicularStrainOfWindwardSide(), roof
-                                            .getLengthOfRafter())
-                            , staticEquations
-                                    .materialEndurance(hGirderRepository
+                                            .getLengthOfRafter()),
+                                    materialEndurance(hGirderRepository
                                             .findById(HGirderId)
                                             .get()
                                             .getMomentOfSecondDegreeInertia(), hGirderRepository
@@ -741,39 +665,34 @@ public class HomeController extends HomeControllerService implements HGirderRepo
                                             .getHeight()))));
 
             //lvl
-            map.put("D1", staticEquations
-                    .bearingCapacityOnLinchpin(staticEquations
-                                    .computationalCompressiveTensionAlongFibres(staticEquations
-                                                    .compressiveStrengthOnDLinchpin(staticEquations
-                                                                    .getC1(wholeStrainModel
+            map.put("D1", bearingCapacityOnLinchpin(computationalCompressiveTensionAlongFibres(
+                                                    compressiveStrengthOnDLinchpin(
+                                                                    getC1(wholeStrainModel
                                                                             .getAngle(), wholeStrainModel
                                                                             .getComputationalParallelOwnStrain() + wholeStrainModel
                                                                             .getComputationalParallelSnowStrainOfMajorPour())
                                                             , wholeStrainModel
                                                                     .getComputationalParallelOwnStrain() + wholeStrainModel
                                                                     .getComputationalParallelSnowStrainOfMajorPour(), roof
-                                                                    .getUpperPartOfRafter())
-                                            , staticEquations
-                                                    .crossSectionalAreaOfWoodBasedMaterial(hGirderRepository
+                                                                    .getUpperPartOfRafter()),
+                                                    crossSectionalAreaOfWoodBasedMaterial(hGirderRepository
                                                             .findById(HGirderId)
                                                             .get()
                                                             .getWidth(), hGirderRepository
                                                             .findById(HGirderId)
                                                             .get()
-                                                            .getHeight()))
-                            , 18.00, (-1 * staticEquations
-                                    .computationalTensionAlongYAxis(staticEquations
-                                                    .bendingMomentsInRafterOnMDLinchpin(-0.035, wholeStrainModel
+                                                            .getHeight())), 18.00, (-1 *
+                                    computationalTensionAlongYAxis(
+                                                    bendingMomentsInRafterOnMDLinchpin(-0.035, wholeStrainModel
                                                             .getComputationalPerpendicularOwnStrain(), roof
-                                                            .getLengthOfRafter()) + staticEquations
-                                                    .bendingMomentsInRafterOnMDLinchpin(-0.035, wholeStrainModel
+                                                            .getLengthOfRafter()) +
+                                                    bendingMomentsInRafterOnMDLinchpin(-0.035, wholeStrainModel
                                                             .getComputationalPerpendicularSnowStrainOfMajorPour(), roof
-                                                            .getLengthOfRafter()) + staticEquations
-                                                    .bendingMomentsInRafterOnMDLinchpin(-0.035, wholeStrainModel
+                                                            .getLengthOfRafter()) +
+                                                    bendingMomentsInRafterOnMDLinchpin(-0.035, wholeStrainModel
                                                             .getComputationalPerpendicularStrainOfWindwardSide(), roof
-                                                            .getLengthOfRafter())
-                                            , staticEquations
-                                                    .materialEndurance(hGirderRepository
+                                                            .getLengthOfRafter()),
+                                                    materialEndurance(hGirderRepository
                                                             .findById(HGirderId)
                                                             .get()
                                                             .getMomentOfSecondDegreeInertia(), hGirderRepository
@@ -782,37 +701,32 @@ public class HomeController extends HomeControllerService implements HGirderRepo
                                                             .getHeight())))
                             , 28.80));
             //HB
-            map.put("E1", staticEquations
-                    .bearingCapacityOnLinchpin(staticEquations
-                                    .computationalCompressiveTensionAlongFibres(staticEquations
-                                            .compressiveStrengthOnDLinchpin(staticEquations
-                                                            .getC1(wholeStrainModel
+            map.put("E1", bearingCapacityOnLinchpin(
+                                    computationalCompressiveTensionAlongFibres(
+                                            compressiveStrengthOnDLinchpin(
+                                                            getC1(wholeStrainModel
                                                                     .getAngle(), wholeStrainModel
                                                                     .getComputationalParallelOwnStrain() + wholeStrainModel
                                                                     .getComputationalParallelSnowStrainOfMajorPour())
                                                     , wholeStrainModel
                                                             .getComputationalParallelOwnStrain() + wholeStrainModel
                                                             .getComputationalParallelSnowStrainOfMajorPour(), roof
-                                                            .getUpperPartOfRafter()), staticEquations
-                                            .crossSectionalAreaOfWoodBasedMaterial(hGirderRepository
+                                                            .getUpperPartOfRafter()),
+                                            crossSectionalAreaOfWoodBasedMaterial(hGirderRepository
                                                     .findById(HGirderId)
                                                     .get()
                                                     .getWidth(), hGirderRepository
                                                     .findById(HGirderId)
                                                     .get()
-                                                    .getHeight()))
-                            , 9.69, (-1 * staticEquations
-                                    .computationalTensionAlongYAxis(staticEquations
-                                            .bendingMomentsInRafterOnMDLinchpin(-0.035, wholeStrainModel
+                                                    .getHeight())), 9.69, (-1 * computationalTensionAlongYAxis(
+                                            bendingMomentsInRafterOnMDLinchpin(-0.035, wholeStrainModel
                                                     .getComputationalPerpendicularOwnStrain(), roof
-                                                    .getLengthOfRafter()) + staticEquations
-                                            .bendingMomentsInRafterOnMDLinchpin(-0.035, wholeStrainModel
+                                                    .getLengthOfRafter()) + bendingMomentsInRafterOnMDLinchpin(-0.035, wholeStrainModel
                                                     .getComputationalPerpendicularSnowStrainOfMajorPour(), roof
-                                                    .getLengthOfRafter()) + staticEquations
-                                            .bendingMomentsInRafterOnMDLinchpin(-0.035, wholeStrainModel
+                                                    .getLengthOfRafter()) +bendingMomentsInRafterOnMDLinchpin(-0.035, wholeStrainModel
                                                     .getComputationalPerpendicularStrainOfWindwardSide(), roof
-                                                    .getLengthOfRafter()), staticEquations
-                                            .materialEndurance(hGirderRepository
+                                                    .getLengthOfRafter()),
+                                            materialEndurance(hGirderRepository
                                                     .findById(HGirderId)
                                                     .get()
                                                     .getMomentOfSecondDegreeInertia(), hGirderRepository
@@ -820,9 +734,8 @@ public class HomeController extends HomeControllerService implements HGirderRepo
                                                     .get()
                                                     .getHeight()))), 14.31));
 
-            map.put("F1"
-                    , staticEquations
-                            .serviceabilityLimitState(wholeStrainModel
+            map.put("F1",
+                            serviceabilityLimitState(wholeStrainModel
                                             .getCharacteristicPerpendicularOwnStrain()
                                     , roof
                                             .getLowerPartOfRafter()
@@ -839,9 +752,8 @@ public class HomeController extends HomeControllerService implements HGirderRepo
                                             .get()
                                             .getHeight()));
 
-            map.put("G1", staticEquations
-                    .finalServiceabilityLimitStateOfOwnStrain(staticEquations
-                                    .serviceabilityLimitState(wholeStrainModel
+            map.put("G1", finalServiceabilityLimitStateOfOwnStrain(
+                                    serviceabilityLimitState(wholeStrainModel
                                                     .getCharacteristicPerpendicularOwnStrain()
                                             , roof
                                                     .getLowerPartOfRafter()
@@ -856,11 +768,9 @@ public class HomeController extends HomeControllerService implements HGirderRepo
                                             , hGirderRepository
                                                     .findById(HGirderId)
                                                     .get()
-                                                    .getHeight())
-                            , 1.6));
+                                                    .getHeight()), 1.6));
 
-            map.put("H1", staticEquations
-                    .serviceabilityLimitState(wholeStrainModel
+            map.put("H1", serviceabilityLimitState(wholeStrainModel
                                     .getCharacteristicPerpendicularSnowStrainOfMajorPour(), roof
                                     .getLowerPartOfRafter()
                             , hGirderRepository
@@ -876,8 +786,7 @@ public class HomeController extends HomeControllerService implements HGirderRepo
                                     .get()
                                     .getHeight()));
 
-            map.put("I1", staticEquations
-                    .serviceabilityLimitState(wholeStrainModel
+            map.put("I1",serviceabilityLimitState(wholeStrainModel
                                     .getCharacteristicPerpendicularStrainOfWindwardSide()
                             , roof.getLowerPartOfRafter(), hGirderRepository
                                     .findById(HGirderId)
@@ -892,12 +801,9 @@ public class HomeController extends HomeControllerService implements HGirderRepo
                                     .get()
                                     .getHeight()));
 
-            map.put("J1", (staticEquations
-                    .serviceabilityLimitState(wholeStrainModel
-                                    .getCharacteristicPerpendicularStrainOfWindwardSide()
-                            , roof.getLowerPartOfRafter(), hGirderRepository
-                                    .findById(HGirderId)
-                                    .get()
+            map.put("J1", (serviceabilityLimitState(wholeStrainModel
+                                    .getCharacteristicPerpendicularStrainOfWindwardSide(), roof.getLowerPartOfRafter(),
+                    hGirderRepository.findById(HGirderId).get()
                                     .getModulusOfElasticity()
                             , hGirderRepository
                                     .findById(HGirderId)
@@ -909,8 +815,7 @@ public class HomeController extends HomeControllerService implements HGirderRepo
                                     .getHeight()))
                     * 0.6);
 
-            map.put("K1", (staticEquations
-                    .serviceabilityLimitState(wholeStrainModel
+            map.put("K1", (serviceabilityLimitState(wholeStrainModel
                                     .getCharacteristicPerpendicularStrainOfWindwardSide()
                             , roof
                                     .getLowerPartOfRafter(), hGirderRepository
@@ -925,8 +830,7 @@ public class HomeController extends HomeControllerService implements HGirderRepo
                                     .findById(HGirderId)
                                     .get()
                                     .getHeight())) * 0.6
-                    + staticEquations
-                    .serviceabilityLimitState(wholeStrainModel
+                    + serviceabilityLimitState(wholeStrainModel
                                     .getCharacteristicPerpendicularSnowStrainOfMajorPour()
                             , roof
                                     .getLowerPartOfRafter(), hGirderRepository
@@ -941,11 +845,9 @@ public class HomeController extends HomeControllerService implements HGirderRepo
                                     .findById(HGirderId)
                                     .get()
                                     .getHeight())
-                    + staticEquations
-                    .finalServiceabilityLimitStateOfOwnStrain(staticEquations
-                            .serviceabilityLimitState(wholeStrainModel
-                                            .getCharacteristicPerpendicularOwnStrain()
-                                    , roof
+                    + finalServiceabilityLimitStateOfOwnStrain(serviceabilityLimitState(wholeStrainModel
+                                            .getCharacteristicPerpendicularOwnStrain(),
+                    roof
                                             .getLowerPartOfRafter(), hGirderRepository
                                             .findById(HGirderId)
                                             .get()
@@ -959,16 +861,12 @@ public class HomeController extends HomeControllerService implements HGirderRepo
                                             .get()
                                             .getHeight()), 1.6));
 
-            map.put("L1", staticEquations
-                    .admissibleBend(roof
+            map.put("L1", admissibleBend(roof
                             .getLowerPartOfRafter()));
 
-            map.put("M1", staticEquations
-                    .admissibleBendCheck(staticEquations
-                                    .admissibleBend(roof
-                                            .getLowerPartOfRafter())
-                            , (staticEquations
-                                    .serviceabilityLimitState(wholeStrainModel
+            map.put("M1", admissibleBendCheck(admissibleBend(roof
+                                            .getLowerPartOfRafter()),
+                    (serviceabilityLimitState(wholeStrainModel
                                                     .getCharacteristicPerpendicularStrainOfWindwardSide()
                                             , roof.getLowerPartOfRafter(), hGirderRepository
                                                     .findById(HGirderId)
@@ -981,9 +879,8 @@ public class HomeController extends HomeControllerService implements HGirderRepo
                                             , hGirderRepository
                                                     .findById(HGirderId)
                                                     .get()
-                                                    .getHeight())) * 0.6
-                                    + staticEquations
-                                    .serviceabilityLimitState(wholeStrainModel
+                                                    .getHeight())) * 0.6 +
+                            serviceabilityLimitState(wholeStrainModel
                                                     .getCharacteristicPerpendicularSnowStrainOfMajorPour()
                                             , roof
                                                     .getLowerPartOfRafter(), hGirderRepository
@@ -998,11 +895,10 @@ public class HomeController extends HomeControllerService implements HGirderRepo
                                                     .findById(HGirderId)
                                                     .get()
                                                     .getHeight())
-                                    + staticEquations
-                                    .finalServiceabilityLimitStateOfOwnStrain(staticEquations
-                                            .serviceabilityLimitState(wholeStrainModel
-                                                            .getCharacteristicPerpendicularOwnStrain()
-                                                    , roof
+                                    + finalServiceabilityLimitStateOfOwnStrain(
+                                            serviceabilityLimitState(wholeStrainModel
+                                                            .getCharacteristicPerpendicularOwnStrain(),
+                                                    roof
                                                             .getLowerPartOfRafter(), hGirderRepository
                                                             .findById(HGirderId)
                                                             .get()
@@ -1018,60 +914,5 @@ public class HomeController extends HomeControllerService implements HGirderRepo
 
             return "RoofDimensions";
         }
-    }
-
-    @Override
-    public <S extends HGirderModel> S save(S s) {
-        return null;
-    }
-
-    @Override
-    public <S extends HGirderModel> Iterable<S> saveAll(Iterable<S> iterable) {
-        return null;
-    }
-
-    @Override
-    public Optional<HGirderModel> findById(Long aLong) {
-        return Optional.empty();
-    }
-
-    @Override
-    public boolean existsById(Long aLong) {
-        return false;
-    }
-
-    @Override
-    public Iterable<HGirderModel> findAll() {
-        return null;
-    }
-
-    @Override
-    public Iterable<HGirderModel> findAllById(Iterable<Long> iterable) {
-        return null;
-    }
-
-    @Override
-    public long count() {
-        return 0;
-    }
-
-    @Override
-    public void deleteById(Long aLong) {
-
-    }
-
-    @Override
-    public void delete(HGirderModel hGirderModel) {
-
-    }
-
-    @Override
-    public void deleteAll(Iterable<? extends HGirderModel> iterable) {
-
-    }
-
-    @Override
-    public void deleteAll() {
-
     }
 }

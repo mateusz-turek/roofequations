@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 
-@Service
+
 public interface StaticEquations {
 
      default Double bendingMomentsInRafterOnMDLinchpin(Double modifierK1

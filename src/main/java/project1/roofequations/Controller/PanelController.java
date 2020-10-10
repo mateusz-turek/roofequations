@@ -1,5 +1,6 @@
 package project1.roofequations.Controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +14,11 @@ import java.util.Optional;
 
 @Controller
 public class PanelController implements HGirderRepository {
+
     private HGirderRepository hGirderRepository;
 
-    public PanelController(@Qualifier("HGirder") HGirderRepository hGirderRepository) {
+    @Autowired
+    public PanelController(@Qualifier("HGirderRepository") HGirderRepository hGirderRepository) {
         this.hGirderRepository = hGirderRepository;
     }
 
