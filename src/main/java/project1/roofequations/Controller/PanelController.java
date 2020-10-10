@@ -13,7 +13,7 @@ import project1.roofequations.repository.HGirderRepository;
 import java.util.Optional;
 
 @Controller
-public class PanelController implements HGirderRepository {
+public class PanelController  {
 
     private HGirderRepository hGirderRepository;
 
@@ -53,58 +53,4 @@ public class PanelController implements HGirderRepository {
         return new ResponseEntity<>(hGirderRepository.findAll(), HttpStatus.OK);
     }
 
-    @Override
-    public <S extends HGirderModel> S save(S s) {
-        return null;
-    }
-
-    @Override
-    public <S extends HGirderModel> Iterable<S> saveAll(Iterable<S> iterable) {
-        return null;
-    }
-
-    @Override
-    public Optional<HGirderModel> findById(Long aLong) {
-        return Optional.empty();
-    }
-
-    @Override
-    public boolean existsById(Long aLong) {
-        return false;
-    }
-
-    @Override
-    public Iterable<HGirderModel> findAll() {
-        return null;
-    }
-
-    @Override
-    public Iterable<HGirderModel> findAllById(Iterable<Long> iterable) {
-        return null;
-    }
-
-    @Override
-    public long count() {
-        return 0;
-    }
-
-    @Override
-    public void deleteById(Long aLong) {
-
-    }
-
-    @Override
-    public void delete(HGirderModel hGirderModel) {
-
-    }
-
-    @Override
-    public void deleteAll(Iterable<? extends HGirderModel> iterable) {
-
-    }
-
-    @Override
-    public void deleteAll() {
-
-    }
 }
