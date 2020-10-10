@@ -1,9 +1,6 @@
 package project1.roofequations.Interface;
-import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-
-
 
 public interface StaticEquations {
 
