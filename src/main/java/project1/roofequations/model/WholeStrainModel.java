@@ -8,8 +8,8 @@ public class WholeStrainModel {
     private Double angle;
     private Double spacing;
     private Double userOwnBuildingStrain;
-    private Double coefficientOfConstantStrain = 1.35;
-    private Double coefficientOfVariableStrain = 1.5;
+    private final Double coefficientOfConstantStrain = 1.35;
+    private final Double coefficientOfVariableStrain = 1.5;
     private Double computationalUserOwnBuildingStrain;
 //Own Strain
     private Double characteristicParallelOwnStrain;
